@@ -93,9 +93,9 @@ const Home = () => {
               <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] w-full h-full rounded-full text-[#8C8C8C] mx-2 focus:outline-none"></input>
               </div>
               <div className='flex w-1/3 justify-center'>
-              <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53]'>
+              <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53]' onClick={()=>window.location.href="./Posts"}>
                 <Image src="/PenIcon.svg" alt="SearchButton" width={15} height={15} className="ml-5"></Image>
-                <h1 className='text-m ml-1'>Write</h1>
+                <h1 className='text-m ml-1 text-white'>Write</h1>
               </button>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1'>
                 <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
