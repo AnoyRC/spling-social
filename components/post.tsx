@@ -60,12 +60,12 @@ const Posts: NextPage<Props> = (props: Props) => {
       </div>
       <div className="flex mb-5">
         <div className="flex justify-start w-[70%] ml-5">
-          <div className="w-[fit] h-[fit] border-[#166f00] border-[1px] px-1 rounded-md ml-2">
+          {tags[0] && <div className="w-[fit] h-[fit] border-[#166f00] border-[1px] px-1 rounded-md ml-2">
             <h1 className="text-[#000000]">{tags[0]}</h1>
-          </div>
-          <div className="w-[fit] h-[fit] border-[#166f00] border-[1px] px-1 rounded-md ml-2">
+          </div>}
+          {tags[1] && <div className="w-[fit] h-[fit] border-[#166f00] border-[1px] px-1 rounded-md ml-2">
             <h1 className="text-[#000000]">{tags[1]}</h1>
-          </div>
+          </div>}
           {tags.length > 2 && (
             <div className="w-[fit] h-[fit] border-[#166f00] border-[1px] px-1 rounded-md ml-2">
               <h1 className="text-[#000000]">{`+${tags.length-2}`}</h1>
@@ -73,11 +73,11 @@ const Posts: NextPage<Props> = (props: Props) => {
           )}
         </div>
         <div className="flex justify-end w-[100%] items-center mr-7">
-          <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full px-3 h-7 w-12 self-center flex items-center justify-center ml-1'>
+          <div className='bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] rounded-full px-3 h-7 w-12 self-center flex items-center justify-center ml-1'>
               <Image src="/LikeIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
               <h1 className="text-[#000000] text-lg ml-1">{props.post?.likes.length}</h1>
           </div>
-          <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full px-1.5 h-7 w-8 self-center flex items-center justify-center ml-1'>
+          <div className='bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] rounded-full px-1.5 h-7 w-8 self-center flex items-center justify-center ml-1'>
               <Image src="/CommentIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
           </div>
         </div>

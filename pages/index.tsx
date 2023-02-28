@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from 'react';
 import { Keypair } from '@solana/web3.js';
 import Posts from '@/components/post';
+import ShortPost from '@/components/shortPost';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -37,6 +38,7 @@ const Home = () => {
   const [status,setStatus] = useState<boolean>(false);
   const [posts, setPosts] = useState<Post[]>();
   const [isFeatured, setIsFeatured] = useState<boolean>(true);
+  const [trendingPosts, setTrendingPosts] = useState<Post[]>();
 
   const solanaWallet = useWallet();
 
@@ -69,6 +71,8 @@ const Home = () => {
       if(socialProtocol !== null && socialProtocol !== undefined){
         const posts = await socialProtocol.getAllPosts(33);
         setPosts(posts);
+        const trendingPosts = posts.sort((a, b) => b.likes.length - a.likes.length).slice(0, 3);
+        setTrendingPosts(trendingPosts)
         console.log(posts);
       }
     };
@@ -76,7 +80,7 @@ const Home = () => {
     Initialize();
     userIntitialize();
     postInitialize();
-  }, [solanaWallet]);
+  }, [solanaWallet,isFeatured]);
 
   return (
     <>
@@ -156,12 +160,26 @@ const Home = () => {
               </div></>}
               </div>
               <>
-              {posts && posts.map((post,index) => (
-                <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />))}
+              {posts && posts.map((post,index) => {
+                if(post.user.avatar)
+                  return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />})}
               </>
             </div>
           </div>
           <div className='w-1/3'>
+            <div className='bg-[#FFFFFF] w-[18%] h-max mt-[96px] border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center ml-10 fixed'>
+              <div className='bg-[#FFFFFF] h-fit w-[100%] rounded-t-[26px] border-[#166F00] border-b-[1px]'>
+                <h1 className='text-[#000000] text-lg ml-5 my-3'>Trending</h1>
+              </div>
+              <>
+                {trendingPosts && trendingPosts.map((post,index) => {
+                  if(post.user.avatar) return <ShortPost key={index} post={post} socialProtocol={socialProtocol} user={userInfo} walletAddress={walletAddress}/>
+                })}
+              </>
+              <div className='bg-[#FFFFFF] h-fit w-[100%] flex justify-center items-center rounded-b-[26px] hover:bg-[#EAEAEA]'>
+                <h1 className='text-[#000000] text-lg py-2'>See More...</h1>
+              </div>
+            </div>
           </div>
         </div>
       </div>
