@@ -124,14 +124,16 @@ a {
     font-family: 'DM Sans', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-weight: 600;
-    height: 48px;
+    height: 38px;
     line-height: 48px;
     padding: 0 24px;
-    border-radius: 4px;
+    border-radius: 20px;
+    
+    align-items: center;
 }
 
 .wallet-adapter-button-trigger {
-    background-color: #512da8;
+    background-color: green;
 }
 
 .wallet-adapter-button:not([disabled]):focus-visible {
@@ -164,7 +166,7 @@ a {
 }
 
 .wallet-adapter-button-start-icon {
-    margin-right: 12px;
+    margin-right: 0;
 }
 
 .wallet-adapter-collapse {
@@ -188,7 +190,7 @@ a {
     margin: 0;
     list-style: none;
     background: #2c2d30;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.6);
     opacity: 0;
     visibility: hidden;
@@ -214,7 +216,7 @@ a {
     box-sizing: border-box;
     padding: 0 20px;
     width: 100%;
-    border-radius: 6px;
+    border-radius: 16px;
     font-size: 14px;
     font-weight: 600;
     height: 37px;
@@ -339,7 +341,7 @@ a {
 }
 
 .wallet-adapter-modal-list {
-    margin: 0 0 12px 0;
+    margin: 0 0 0 0;
     padding: 0;
     width: 100%;
     list-style: none;
@@ -400,10 +402,10 @@ a {
     cursor: pointer;
     margin-top: 48px;
     width: 100%;
-    background-color: #512da8;
+    background-color: green;
     padding: 12px;
     font-size: 18px;
     border: none;
-    border-radius: 8px;
+    border-radius: 20px;
     color: #fff;
 }
