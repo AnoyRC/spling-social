@@ -38,7 +38,7 @@ const Users = () => {
   const [userInfo, setUserInfo] = useState<User | null>();
   const [status,setStatus] = useState<boolean>(false);
   const [posts, setPosts] = useState<Post[]>();
-  const [isFeatured, setIsFeatured] = useState<boolean>(true);
+  const [isFeatured, setIsFeatured] = useState<boolean>(false);
   const [userQuery, setUserQuery] = useState<User>();
   const router = useRouter()
 
@@ -77,7 +77,7 @@ const Users = () => {
     const postInitialize = async () => {
       if(socialProtocol !== null && socialProtocol !== undefined){
         const posts = await socialProtocol.getAllPosts(33);
-        const filteredPosts = posts.filter((post) => post.userId === Number(router.query.id) && post.groupId === 33);
+        const filteredPosts = posts.filter((post) => post.userId == Number(router.query.id) && post.groupId == 33);
         setPosts(filteredPosts);
         console.log(filteredPosts)
       }
@@ -86,7 +86,7 @@ const Users = () => {
     Initialize();
     userIntitialize();
     postInitialize();
-  }, [solanaWallet,isFeatured]);
+  }, [solanaWallet]);
 
   return (
     <>
@@ -115,25 +115,25 @@ const Users = () => {
         <div className='bg-[#F8FFE9] h-max w-screen flex justify-center'>
           <div className='w-1/3 flex justify-end'>
             <div className='bg-[#FFFFFF] w-[17%] h-max mt-[96px] border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center mr-10 fixed'>
-              <div className='flex w-[100%] mb-2 mt-8'>
+              <div className='flex w-[100%] py-2 mt-8 hover:bg-[#EAEAEA] hover:cursor-pointer' onClick={()=>{window.location.href = '/'}}>
                 <div className='flex justify-start w-[100%]'>
-                  <Image src="/FeedActiveIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
-                  <h1 className='text-xl ml-3 text-[#166f00]'>Your Feed</h1>
-                </div>
-                <div className=' flex justify-end w-[10%]'>
-                  <div className='bg-[#166f00] w-1.5 h-8 rounded-tl-md rounded-bl-md'></div>
+                  <Image src="/FeedIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
+                  <h1 className='text-xl ml-3 text-[#000000]'>Your Feed</h1>
                 </div>
               </div>
-              <div className='flex w-[100%] py-2 hover:bg-[#EAEAEA]'>
+              <div className='flex w-[100%] py-2 hover:bg-[#EAEAEA] hover:cursor-pointer'>
                 <div className='flex justify-start w-[100%]'>
                   <Image src="/ExploreIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
                   <h1 className='text-xl ml-3 text-[#000000]'>Explore</h1>
                 </div>
               </div>
-              <div className='flex w-[100%] py-2 mb-6 hover:bg-[#EAEAEA]'>
+              <div className='flex w-[100%] py-2 mb-6 '>
                 <div className='flex justify-start w-[100%]'>
-                  <Image src="/ProfileIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
-                  <h1 className='text-xl ml-3 text-[#000000]'>My Profile</h1>
+                  <Image src="/ProfileActiveIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
+                  <h1 className='text-xl ml-3 text-[#166f00]'>My Profile</h1>
+                </div>
+                <div className=' flex justify-end w-[10%]'>
+                  <div className='bg-[#166f00] w-1.5 h-8 rounded-tl-md rounded-bl-md'></div>
                 </div>
               </div>
             </div>
@@ -153,14 +153,10 @@ const Users = () => {
                   <h1 className='text-[#000000] ml-2 text-lg'>Personalized</h1>
                 </div></>) || 
                 <>
-                <div className='flex items-center ml-5 pb-1 px-2 hover:bg-[#EAEAEA]' onClick={()=>{setIsFeatured(true)}}>
-                  <Image src="/FeaturedIcon.svg" alt="Featured" width={16} height={16} ></Image>
-                  <h1 className='text-[#000000] ml-2 text-lg'>Featured</h1>
-                </div>
                 <div className='flex flex-col justify-center'>
                 <div className='flex items-center ml-5 h-[100%]'>
                   <Image src="/PersonalizedActiveIcon.svg" alt="Personalized" width={13} height={13} className='mb-[0.5px]' ></Image>
-                  <h1 className='text-[#166f00] ml-2 text-lg'>Personalized</h1>
+                  <h1 className='text-[#166f00] ml-2 text-lg'>{`${userQuery?.nickname}'s posts`}</h1>
                 </div>
                 <div className='bg-[#166f00] justify-end flex flex-col w-[85%] h-[4px] self-center rounded-t-md ml-7'></div>
               </div></>}

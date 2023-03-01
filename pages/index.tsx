@@ -118,13 +118,13 @@ const Home = () => {
                   <div className='bg-[#166f00] w-1.5 h-8 rounded-tl-md rounded-bl-md'></div>
                 </div>
               </div>
-              <div className='flex w-[100%] py-2 hover:bg-[#EAEAEA]'>
+              <div className='flex w-[100%] py-2 hover:bg-[#EAEAEA] hover:cursor-pointer'>
                 <div className='flex justify-start w-[100%]'>
                   <Image src="/ExploreIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
                   <h1 className='text-xl ml-3 text-[#000000]'>Explore</h1>
                 </div>
               </div>
-              <div className='flex w-[100%] py-2 mb-6 hover:bg-[#EAEAEA]'>
+              <div className='flex w-[100%] py-2 mb-6 hover:bg-[#EAEAEA] hover:cursor-pointer' onClick={()=>{if(userInfo) window.location.href = `/user/${userInfo?.userId}`}}>
                 <div className='flex justify-start w-[100%]'>
                   <Image src="/ProfileIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
                   <h1 className='text-xl ml-3 text-[#000000]'>My Profile</h1>
