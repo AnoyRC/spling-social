@@ -4,7 +4,6 @@ import { Inter } from '@next/font/google'
 import { SocialProtocol } from "@spling/social-protocol";
 import { useWallet, WalletContextState } from "@solana/wallet-adapter-react";
 import styles from '@/styles/Home.module.css'
-import { useRouter } from 'next/router'
 import {
   FileData,
   ProtocolOptions,
@@ -32,15 +31,13 @@ const WalletMultiButtonDynamic = dynamic(
 );
 
 
-const Users = () => {
+const Explore = () => {
   const [socialProtocol, setSocialProtocol] = useState<SocialProtocol>();
   const [walletAddress, setWalletAddress] = useState<WalletContextState>();
   const [userInfo, setUserInfo] = useState<User | null>();
   const [status,setStatus] = useState<boolean>(false);
   const [posts, setPosts] = useState<Post[]>();
-  const [isFeatured, setIsFeatured] = useState<boolean>(false);
-  const [userQuery, setUserQuery] = useState<User>();
-  const router = useRouter()
+  const [trendingPosts, setTrendingPosts] = useState<Post[]>();
 
   const solanaWallet = useWallet();
 
@@ -67,19 +64,15 @@ const Users = () => {
         console.log(user);
         if(user!==null) setStatus(true)
       }
-      
-      if(router.query.id === undefined) return;
-      const userQuery = await socialProtocol?.getUser(Number(router.query.id));
-      if(userQuery)  setUserQuery(userQuery);
-      console.log(userQuery)
     };
 
     const postInitialize = async () => {
       if(socialProtocol !== null && socialProtocol !== undefined){
         const posts = await socialProtocol.getAllPosts(33);
-        const filteredPosts = posts.filter((post) => post.userId == Number(router.query.id) && post.groupId == 33);
-        setPosts(filteredPosts);
-        console.log(filteredPosts)
+        setPosts(posts);
+        const trendingPosts = posts.sort((a, b) => b.likes.length - a.likes.length).slice(0, 3);
+        setTrendingPosts(trendingPosts)
+        console.log(posts);
       }
     };
 
@@ -99,9 +92,9 @@ const Users = () => {
               <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] w-full h-full rounded-full text-[#8C8C8C] mx-2 focus:outline-none"></input>
               </div>
               <div className='flex w-1/3 justify-center'>
-              <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53]'>
+              <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53]' onClick={()=>window.location.href="./Posts"}>
                 <Image src="/PenIcon.svg" alt="SearchButton" width={15} height={15} className="ml-5"></Image>
-                <h1 className='text-m ml-1'>Write</h1>
+                <h1 className='text-m ml-1 text-white'>Write</h1>
               </button>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1'>
                 <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
@@ -121,45 +114,53 @@ const Users = () => {
                   <h1 className='text-xl ml-3 text-[#000000]'>Your Feed</h1>
                 </div>
               </div>
-              <div className='flex w-[100%] py-2 hover:bg-[#EAEAEA] hover:cursor-pointer' onClick={()=>{window.location.href = '/explore'}}>
+              <div className='flex w-[100%] py-2'>
                 <div className='flex justify-start w-[100%]'>
-                  <Image src="/ExploreIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
-                  <h1 className='text-xl ml-3 text-[#000000]'>Explore</h1>
-                </div>
-              </div>
-              <div className='flex w-[100%] py-2 mb-6 '>
-                <div className='flex justify-start w-[100%]'>
-                  <Image src="/ProfileActiveIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
-                  <h1 className='text-xl ml-3 text-[#166f00]'>My Profile</h1>
+                  <Image src="/ExploreActiveIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
+                  <h1 className='text-xl ml-3 text-[#166f00]'>Explore</h1>
                 </div>
                 <div className=' flex justify-end w-[10%]'>
                   <div className='bg-[#166f00] w-1.5 h-8 rounded-tl-md rounded-bl-md'></div>
+                </div>
+              </div>
+              <div className='flex w-[100%] py-2 mb-6 hover:bg-[#EAEAEA] hover:cursor-pointer' onClick={()=>{if(userInfo) window.location.href = `/user/${userInfo?.userId}`}}>
+                <div className='flex justify-start w-[100%]'>
+                  <Image src="/ProfileIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
+                  <h1 className='text-xl ml-3 text-[#000000]'>My Profile</h1>
                 </div>
               </div>
             </div>
           </div>
           <div className='w-1/3'>
             <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-[26px] w-[100%] h-fit pb-8 mt-[96px] flex flex-col'>
-              <div className='bg-[#FFFFFF] w-[100%] h-[50px] rounded-t-[26px] border-[#166f00] border-b-[1px] flex'>
-               {isFeatured && (<><div className='flex flex-col justify-center'>
-                  <div className='flex items-center ml-7 h-[100%]'>
-                    <Image src="/FeaturedActiveIcon.svg" alt="Featured" width={16} height={16} ></Image>
-                    <h1 className='text-[#166f00] ml-2 text-lg'>Featured</h1>
-                  </div>
-                  <div className='bg-[#166f00] justify-end flex flex-col w-[80%] h-[4px] self-center rounded-t-md ml-7'></div>
+                <div className='flex ml-7 mt-4 items-center'>
+                    <Image src="/TagIcon.svg" alt="SearchButton" width={20} height={20} className=""></Image>
+                    <h1 className='text-2xl text-[#000000] ml-1.5 text-center'>Trending tags</h1>
                 </div>
-                <div className='flex items-center ml-5 pb-1 px-2 hover:bg-[#EAEAEA]' onClick={()=>{setIsFeatured(false)}}>
-                  <Image src="/PersonalizedIcon.svg" alt="Personalized" width={13} height={13} ></Image>
-                  <h1 className='text-[#000000] ml-2 text-lg'>Personalized</h1>
-                </div></>) || 
-                <>
-                <div className='flex flex-col justify-center'>
-                <div className='flex items-center ml-5 h-[100%]'>
-                  <Image src="/PersonalizedActiveIcon.svg" alt="Personalized" width={13} height={13} className='mb-[0.5px]' ></Image>
-                  <h1 className='text-[#166f00] ml-2 text-lg'>{`${userQuery?.nickname}'s posts`}</h1>
+                <div className='flex mt-4 items-center justify-center w-[100%]'>
+                    <div className='flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer'>
+                        <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
+                        <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Programing</h1>
+                    </div>
+                    <div className='ml-7 flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer'>
+                        <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
+                        <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Solana</h1>
+                    </div>
                 </div>
-                <div className='bg-[#166f00] justify-end flex flex-col w-[85%] h-[4px] self-center rounded-t-md ml-7'></div>
-              </div></>}
+                <div className='flex mt-4 items-center justify-center w-[100%]'>
+                    <div className='flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer'>
+                        <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
+                        <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Hackathon</h1>
+                    </div>
+                    <div className='ml-7 flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer'>
+                        <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
+                        <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Tips</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-[26px] w-[100%] h-fit pb-8 mt-5 flex flex-col'>
+              <div className='bg-[#FFFFFF] w-[100%] h-[35px] rounded-t-[26px] border-[#166f00] border-b-[1px] flex'>
               </div>
               <>
               {posts && posts.map((post,index) => {
@@ -169,35 +170,18 @@ const Users = () => {
             </div>
           </div>
           <div className='w-1/3'>
-            <div className='flex flex-col fixed mt-[96px] w-[18%] ml-10'>
-              <div className='bg-[#FFFFFF] w-[100%] h-max  border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center'>
-              <div className='flex w-[100%] flex-col justify-center items-center mt-5'>
-            {userQuery?.avatar && (
-              <Image
-               src={userQuery.avatar}
-               alt="avatar"
-               width={200}
-               height={200}
-               className="rounded-full h-[150px] w-[150px]"
-              ></Image>
-            )}
-            <h1 className='text-[#000000] text-2xl mt-4'>{userQuery?.nickname}</h1>
-            <h1 className='text-[#000000] text-sm px-7 text-center mt-1'>{userQuery?.bio}</h1>
-            <div className='flex justify-between mx-10 w-[70%] mb-5'>
-              <div className='flex flex-col justify-center items-center'>
-                <h1 className='text-[#000000] text-lg mt-4 font-semibold'>Followers</h1>
-                <h1 className='text-[#000000] text-lg'>{userQuery?.groups.length}</h1>
+            <div className='bg-[#FFFFFF] w-[18%] h-max mt-[96px] border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center ml-10 fixed'>
+              <div className='bg-[#FFFFFF] h-fit w-[100%] rounded-t-[26px] border-[#166F00] border-b-[1px]'>
+                <h1 className='text-[#000000] text-lg ml-5 my-3'>Trending</h1>
               </div>
-              <div className='flex flex-col justify-center items-center'>
-                <h1 className='text-[#000000] text-lg mt-4 font-semibold'>Following</h1>
-                <h1 className='text-[#000000] text-lg'>{userQuery?.following.length}</h1>
+              <>
+                {trendingPosts && trendingPosts.map((post,index) => {
+                  if(post.user.avatar) return <ShortPost key={index} post={post} socialProtocol={socialProtocol} user={userInfo} walletAddress={walletAddress}/>
+                })}
+              </>
+              <div className='bg-[#FFFFFF] h-fit w-[100%] flex justify-center items-center rounded-b-[26px] hover:bg-[#EAEAEA]'>
+                <h1 className='text-[#000000] text-lg py-2'>See More...</h1>
               </div>
-            </div>
-            </div>
-              </div>
-              {userQuery?.userId !== userInfo?.userId && <button className='transition ease-in delay-100 bg-[#166F00] rounded-2xl my-5 h-fit py-2 px-10 w-fit self-center justify-center flex items-center hover:bg-[#5f8e53]'>
-                <h1 className='text-m ml-1'>Follow</h1>
-              </button>}
             </div>
           </div>
         </div>
@@ -206,4 +190,4 @@ const Users = () => {
   )
 }
 
-export default Users
+export default Explore
