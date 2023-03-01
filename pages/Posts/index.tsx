@@ -34,6 +34,9 @@ export default function Posts() {
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const [title, setTitle] = useState<string>();
     const [article, setArticle] = useState<string | undefined>();
+    const [articleImage,setArticleImage]=useState<File>();
+
+    const articleImgRef=useRef<HTMLInputElement>(null);
 
     useAutosizeTextArea(textAreaRef.current, article)
     const solanaWallet = useWallet()
@@ -43,6 +46,22 @@ export default function Posts() {
 
         setArticle(val);
     };
+
+    const convertBase64 = (file: File) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+
+            fileReader.onload = () => {
+                resolve(fileReader.result);
+            };
+
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
     useEffect(() => {
         setWalletAddress(solanaWallet)
         const initialize = async () => {
@@ -91,6 +110,40 @@ export default function Posts() {
                     </div>
                     <div className='w-2/4'>
                         <div className='bg-[#FFFFFF] border-r-[#166f00] border-r-[1px] border-l-[#166f00] border-l-[1px]  w-[100%] h-screen pb-8 px-8 flex flex-col'>
+                            <div
+                                onClick={() => {
+                                    articleImgRef?.current?.click();
+                                }}
+                                className=" mt-[96px] p-[8px] rounded-full hover:cursor-pointer"
+                            >
+                                {articleImage ? (
+                                    <img
+                                        onClick={() => {
+                                            articleImgRef?.current?.click();
+                                        }}
+                                        src={URL.createObjectURL(articleImage)}
+                                        alt="avatar"
+                                        
+                                    />
+                                ) : (
+                                    <div className='flex flex-row'>
+                                        <img src="/AddCover.svg" alt="ProfilePic" className='h-20px w-20px mr-2' />
+                                        <p>Add Cover</p>
+                                    </div>
+                                )}
+                            </div>
+                            <input
+                                type="file"
+                                className="hidden"
+                                ref={articleImgRef}
+                                onChange={(e) => {
+                                    if (!e.target.files) return;
+                                    setArticleImage(e.target.files[0]);
+                                    console.log(e.target.files[0].type);
+                                }}
+                            />
+
+
                             <input
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
@@ -110,8 +163,8 @@ export default function Posts() {
                     </div>
 
 
-                    <div className='w-1/4 mt-12 ml-3'>
-                        <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[30px] w-max-content self-center flex items-center mx-1 hover:bg-[#5f8e53]' onClick={() => window.location.href = "./Posts"}>
+                    <div className='w-1/4 ml-3'>
+                        <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[30px] w-max-content self-center flex items-center mx-1 hover:bg-[#5f8e53] mt-[96px]' onClick={() => window.location.href = "./Posts"}>
                             <Image src="/PenIcon.svg" alt="SearchButton" width={15} height={15} className="ml-7"></Image>
                             <h1 className='text-m ml-1 text-white mr-7'>Write</h1>
                         </button>
