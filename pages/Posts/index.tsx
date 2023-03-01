@@ -11,8 +11,9 @@ import {
     Post,
 } from "@spling/social-protocol/dist/types";
 import dynamic from "next/dynamic";
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Keypair } from '@solana/web3.js';
+import useAutosizeTextArea from '@/hooks/useAutosizeTextarea';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,8 +31,18 @@ export default function Posts() {
     const [status, setStatus] = useState<boolean>(false);
     const [posts, setPosts] = useState<Post[]>();
     const [isFeatured, setIsFeatured] = useState<boolean>(true);
+    const textAreaRef = useRef<HTMLTextAreaElement>(null)
+    const [title, setTitle] = useState<string>();
+    const [article, setArticle] = useState<string | undefined>();
 
+    useAutosizeTextArea(textAreaRef.current, article)
     const solanaWallet = useWallet()
+
+    const handleChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
+        const val = evt.target?.value;
+
+        setArticle(val);
+    };
     useEffect(() => {
         setWalletAddress(solanaWallet)
         const initialize = async () => {
@@ -79,22 +90,25 @@ export default function Posts() {
                         </div>
                     </div>
                     <div className='w-2/4'>
-                        <div className='bg-[#FFFFFF] border-r-[#166f00] border-r-[1px] border-l-[#166f00] border-l-[1px]  w-[100%] h-screen pb-8  flex flex-col'>
+                        <div className='bg-[#FFFFFF] border-r-[#166f00] border-r-[1px] border-l-[#166f00] border-l-[1px]  w-[100%] h-screen pb-8 px-8 flex flex-col'>
+                            <input
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="Title..."
+                                className="w-[90%] placeholder:text-gray-500 text-3xl  mt-2 h-12 p-2 focus:outline-none"
+                            />
+                            <textarea
+                                onChange={handleChange}
+                                ref={textAreaRef}
+                                value={article}
+                                placeholder="Body..."
+                                className="w-[100%] h-32 placeholder:text-gray-500  mt-2 p-2 focus:outline-none overflow:hidden"
 
+                            />
 
                         </div>
                     </div>
-                    {/* <div className='w-1/3'>
-                        <div className='bg-[#FFFFFF] w-[18%] h-max mt-[96px] border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center ml-10 fixed'>
-                            <div className='bg-[#FFFFFF] h-fit w-[100%] rounded-t-[26px] border-[#166F00] border-b-[1px]'>
-                                <h1 className='text-[#000000] text-lg ml-5 my-3'>Trending</h1>
-                            </div>
 
-                            <div className='bg-[#FFFFFF] h-fit w-[100%] flex justify-center items-center rounded-b-[26px] hover:bg-[#EAEAEA]'>
-                                <h1 className='text-[#000000] text-lg py-2'>See More...</h1>
-                            </div>
-                        </div>
-                    </div> */}
 
                     <div className='w-1/4 mt-12 ml-3'>
                         <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[30px] w-max-content self-center flex items-center mx-1 hover:bg-[#5f8e53]' onClick={() => window.location.href = "./Posts"}>
