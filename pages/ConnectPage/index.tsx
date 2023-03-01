@@ -82,7 +82,8 @@ export default function ConnectPage() {
             <div className=' flex justify-center items-center flex-col h-screen '>
                 <div className='border-[#166F00] border-[1px] rounded-[26px] p-20'>
                     <h2 className="text-2xl text-center">Welcome to Spling Gym</h2>
-                    <div className='items-center justify-center'><WalletMultiButtonDynamic /></div>
+                    <div className='items-center flex justify-center m-0'><WalletMultiButtonDynamic /></div>
+                    
                     <p className="text-center">
                         Connect your phantom wallet to continue
                     </p>
