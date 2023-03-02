@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from 'react';
 import { Keypair } from '@solana/web3.js';
 import useAutosizeTextArea from '@/hooks/useAutosizeTextarea';
+import TagsInput from '@/components/tags';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -158,6 +159,7 @@ export default function Posts() {
                                 className="w-[100%] h-32 placeholder:text-gray-500  mt-2 p-2 focus:outline-none overflow:hidden"
 
                             />
+                            <TagsInput />
 
                         </div>
                     </div>
