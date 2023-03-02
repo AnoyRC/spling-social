@@ -39,7 +39,8 @@ const Home = () => {
   const [posts, setPosts] = useState<Post[]>();
   const [isFeatured, setIsFeatured] = useState<boolean>(true);
   const [trendingPosts, setTrendingPosts] = useState<Post[]>();
-
+  const [personalizedPosts, setPersonalizedPosts] = useState<Post[]>();
+  const [loadPersonalized, setLoadPersonalized] = useState<boolean>(false);
   const solanaWallet = useWallet();
 
   useEffect(() => {
@@ -74,13 +75,27 @@ const Home = () => {
         const trendingPosts = posts.sort((a, b) => b.likes.length - a.likes.length).slice(0, 3);
         setTrendingPosts(trendingPosts)
         console.log(posts);
+        handlePosts();
       }
     };
+
+    const handlePosts = async() => {
+      if(socialProtocol !== null && socialProtocol !== undefined && userInfo !== null && userInfo !== undefined && !loadPersonalized){
+        const posts : Post[] = []
+        userInfo?.following.forEach(async(userId) => {
+          const userPost = await socialProtocol?.getAllPostsByUserId(userId)
+          posts.push(...userPost);
+        });
+        setPersonalizedPosts(posts);
+        setLoadPersonalized(true);
+        console.log(posts);
+      }
+    }
 
     Initialize();
     userIntitialize();
     postInitialize();
-  }, [solanaWallet,isFeatured]);
+  }, [solanaWallet, isFeatured]);
 
   return (
     <>
@@ -132,7 +147,7 @@ const Home = () => {
               </div>
             </div>
           </div>
-          <div className='w-1/3'>
+          <div className='w-[638px]'>
             <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-[26px] w-[100%] h-fit pb-8 mt-[96px] flex flex-col'>
               <div className='bg-[#FFFFFF] w-[100%] h-[50px] rounded-t-[26px] border-[#166f00] border-b-[1px] flex'>
                {isFeatured && (<><div className='flex flex-col justify-center'>
@@ -142,7 +157,7 @@ const Home = () => {
                   </div>
                   <div className='bg-[#166f00] justify-end flex flex-col w-[80%] h-[4px] self-center rounded-t-md ml-7'></div>
                 </div>
-                <div className='flex items-center ml-5 pb-1 px-2 hover:bg-[#EAEAEA]' onClick={()=>{setIsFeatured(false)}}>
+                <div className='flex items-center ml-5 pb-1 px-2 hover:bg-[#EAEAEA]' onClick={()=>{if(userInfo) setIsFeatured(false)}}>
                   <Image src="/PersonalizedIcon.svg" alt="Personalized" width={13} height={13} ></Image>
                   <h1 className='text-[#000000] ml-2 text-lg'>Personalized</h1>
                 </div></>) || 
@@ -160,10 +175,20 @@ const Home = () => {
               </div></>}
               </div>
               <>
-              {posts && posts.map((post,index) => {
+              {isFeatured && (posts && posts.map((post,index) => {
                 if(post.user.avatar)
-                  return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />})}
+                  return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />}))}
               </>
+              {isFeatured && posts?.length === 0 && <h1 className='text-[#5E5E5E] italic text-center mt-6'>{`"Touch Some Grass, after you come back you will see some posts here!!"`}</h1>}
+
+              <>
+              {!isFeatured && loadPersonalized && (personalizedPosts && personalizedPosts.map((post,index) => {
+                if(post.user.avatar)
+                  return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />}))}
+              </>
+              {!isFeatured && !loadPersonalized && <h1 className='text-[#5E5E5E] italic text-center mt-6'>{`"Loading..."`}</h1>}
+              {!isFeatured && loadPersonalized && personalizedPosts?.length === 0 && <h1 className='text-[#5E5E5E] italic text-center mt-6'>{`"Guess What, You follow noone !!"`}</h1>}
+
             </div>
           </div>
           <div className='w-1/3'>

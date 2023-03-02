@@ -81,6 +81,14 @@ const Explore = () => {
     postInitialize();
   }, [solanaWallet]);
 
+  const handlePost = async(text : string) =>{
+    if(socialProtocol !== null && socialProtocol !== undefined){
+      const posts = await socialProtocol.getAllPosts(33);
+      const filteredPosts = posts.filter((post) => post.tags[0].search(text) !== -1);
+      setPosts(filteredPosts);
+    }
+  }
+
   return (
     <>
       <div className='bg-[#F8FFE9] w-screen h-screen'>
@@ -131,28 +139,28 @@ const Explore = () => {
               </div>
             </div>
           </div>
-          <div className='w-1/3'>
+          <div className='w-[638px]'>
             <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-[26px] w-[100%] h-fit pb-8 mt-[96px] flex flex-col'>
                 <div className='flex ml-7 mt-4 items-center'>
                     <Image src="/TagIcon.svg" alt="SearchButton" width={20} height={20} className=""></Image>
                     <h1 className='text-2xl text-[#000000] ml-1.5 text-center'>Trending tags</h1>
                 </div>
                 <div className='flex mt-4 items-center justify-center w-[100%]'>
-                    <div className='flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer'>
+                    <div className='flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("programming")}>
                         <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
                         <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Programing</h1>
                     </div>
-                    <div className='ml-7 flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer'>
+                    <div className='ml-7 flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("solana")}>
                         <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
                         <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Solana</h1>
                     </div>
                 </div>
                 <div className='flex mt-4 items-center justify-center w-[100%]'>
-                    <div className='flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer'>
+                    <div className='flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("hackathon")}>
                         <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
                         <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Hackathon</h1>
                     </div>
-                    <div className='ml-7 flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer'>
+                    <div className='ml-7 flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("tips")}>
                         <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
                         <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Tips</h1>
                     </div>
@@ -163,10 +171,12 @@ const Explore = () => {
               <div className='bg-[#FFFFFF] w-[100%] h-[35px] rounded-t-[26px] border-[#166f00] border-b-[1px] flex'>
               </div>
               <>
-              {posts && posts.map((post,index) => {
+              {(posts && posts.map((post,index) => {
                 if(post.user.avatar)
-                  return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />})}
+                  return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />})) || 
+                  <h1 className='text-[#5E5E5E] italic text-center mt-6'>{`"Touch Some Grass, after you come back you will see some posts here!!"`}</h1>}
               </>
+              {posts?.length === 0 && <h1 className='text-[#5E5E5E] italic text-center mt-6'>{`"Touch Some Grass, after you come back you will see some posts here!!"`}</h1>}
             </div>
           </div>
           <div className='w-1/3'>

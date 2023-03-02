@@ -127,6 +127,7 @@ const Users = () => {
                   <h1 className='text-xl ml-3 text-[#000000]'>Explore</h1>
                 </div>
               </div>
+              {userQuery?.userId === userInfo?.userId &&
               <div className='flex w-[100%] py-2 mb-6 '>
                 <div className='flex justify-start w-[100%]'>
                   <Image src="/ProfileActiveIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
@@ -136,9 +137,18 @@ const Users = () => {
                   <div className='bg-[#166f00] w-1.5 h-8 rounded-tl-md rounded-bl-md'></div>
                 </div>
               </div>
+              }
+              {userQuery?.userId !== userInfo?.userId &&
+              <div className='flex w-[100%] py-2 mb-6 hover:bg-[#EAEAEA] hover:cursor-pointer' onClick={()=>{if(userInfo) window.location.href = `/user/${userInfo?.userId}`}}>
+                <div className='flex justify-start w-[100%]'>
+                  <Image src="/ProfileIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
+                  <h1 className='text-xl ml-3 text-[#000000]'>My Profile</h1>
+                </div>
+              </div>
+              }
             </div>
           </div>
-          <div className='w-1/3'>
+          <div className='w-[638px]'>
             <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-[26px] w-[100%] h-fit pb-8 mt-[96px] flex flex-col'>
               <div className='bg-[#FFFFFF] w-[100%] h-[50px] rounded-t-[26px] border-[#166f00] border-b-[1px] flex'>
                {isFeatured && (<><div className='flex flex-col justify-center'>
