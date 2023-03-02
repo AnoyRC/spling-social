@@ -97,12 +97,12 @@ const Explore = () => {
             <div className='w-1/3'></div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00] border-[1px] rounded-full flex bg-[#EAEAEA] self-center h-[65%] w-1/3'>
               <Image src="/SearchBtn.svg" alt="SearchButton" width={20} height={20} className="ml-4"></Image>
-              <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] w-full h-full rounded-full text-[#8C8C8C] mx-2 focus:outline-none"></input>
+              <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] w-full font-[Quicksand] h-full rounded-full text-[#8C8C8C] mx-2 focus:outline-none"></input>
               </div>
               <div className='flex w-1/3 justify-center'>
               <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53]' onClick={()=>window.location.href="./Posts"}>
                 <Image src="/PenIcon.svg" alt="SearchButton" width={15} height={15} className="ml-5"></Image>
-                <h1 className='text-m ml-1 text-white'>Write</h1>
+                <h1 className='text-m ml-1 text-white font-[Quicksand]'>Write</h1>
               </button>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1'>
                 <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
@@ -116,25 +116,25 @@ const Explore = () => {
         <div className='bg-[#F8FFE9] h-max w-screen flex justify-center'>
           <div className='w-1/3 flex justify-end'>
             <div className='bg-[#FFFFFF] w-[17%] h-max mt-[96px] border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center mr-10 fixed'>
-              <div className='flex w-[100%] py-2 mt-8 hover:bg-[#EAEAEA] hover:cursor-pointer' onClick={()=>{window.location.href = '/'}}>
+              <div className='flex w-[100%] py-2 mt-5 pl-2 hover:bg-[#EAEAEA] hover:cursor-pointer' onClick={()=>{window.location.href = '/'}}>
                 <div className='flex justify-start w-[100%]'>
                   <Image src="/FeedIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
-                  <h1 className='text-xl ml-3 text-[#000000]'>Your Feed</h1>
+                  <h1 className='text-xl ml-3 text-[#000000] font-[Quicksand]'>Your Feed</h1>
                 </div>
               </div>
               <div className='flex w-[100%] py-2'>
-                <div className='flex justify-start w-[100%]'>
+                <div className='flex justify-start pl-2 w-[100%]'>
                   <Image src="/ExploreActiveIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
-                  <h1 className='text-xl ml-3 text-[#166f00]'>Explore</h1>
+                  <h1 className='text-xl ml-3 text-[#166f00] font-[Quicksand]'>Explore</h1>
                 </div>
                 <div className=' flex justify-end w-[10%]'>
                   <div className='bg-[#166f00] w-1.5 h-8 rounded-tl-md rounded-bl-md'></div>
                 </div>
               </div>
-              <div className='flex w-[100%] py-2 mb-6 hover:bg-[#EAEAEA] hover:cursor-pointer' onClick={()=>{if(userInfo) window.location.href = `/user/${userInfo?.userId}`}}>
+              <div className='flex w-[100%] py-2 pl-2 mb-4 hover:bg-[#EAEAEA] hover:cursor-pointer rounded-b-md' onClick={()=>{if(userInfo) window.location.href = `/user/${userInfo?.userId}`}}>
                 <div className='flex justify-start w-[100%]'>
                   <Image src="/ProfileIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
-                  <h1 className='text-xl ml-3 text-[#000000]'>My Profile</h1>
+                  <h1 className='text-xl ml-3 text-[#000000] font-[Quicksand]'>My Profile</h1>
                 </div>
               </div>
             </div>
@@ -143,26 +143,26 @@ const Explore = () => {
             <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-[26px] w-[100%] h-fit pb-8 mt-[96px] flex flex-col'>
                 <div className='flex ml-7 mt-4 items-center'>
                     <Image src="/TagIcon.svg" alt="SearchButton" width={20} height={20} className=""></Image>
-                    <h1 className='text-2xl text-[#000000] ml-1.5 text-center'>Trending tags</h1>
+                    <h1 className='text-2xl text-[#000000] ml-1.5 text-center font-[Quicksand]'>Trending tags</h1>
                 </div>
                 <div className='flex mt-4 items-center justify-center w-[100%]'>
                     <div className='flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("programming")}>
                         <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
-                        <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Programing</h1>
+                        <h1 className='text-xl text-[#000000] ml-1.5 text-center font-[Quicksand]'>Programing</h1>
                     </div>
                     <div className='ml-7 flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("solana")}>
                         <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
-                        <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Solana</h1>
+                        <h1 className='text-xl text-[#000000] ml-1.5 text-center font-[Quicksand]'>Solana</h1>
                     </div>
                 </div>
                 <div className='flex mt-4 items-center justify-center w-[100%]'>
                     <div className='flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("hackathon")}>
                         <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
-                        <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Hackathon</h1>
+                        <h1 className='text-xl text-[#000000] ml-1.5 text-center font-[Quicksand]'>Hackathon</h1>
                     </div>
                     <div className='ml-7 flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("tips")}>
                         <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
-                        <h1 className='text-xl text-[#000000] ml-1.5 text-center'>Tips</h1>
+                        <h1 className='text-xl text-[#000000] ml-1.5 text-center font-[Quicksand]'>Tips</h1>
                     </div>
                 </div>
             </div>
@@ -182,7 +182,7 @@ const Explore = () => {
           <div className='w-1/3'>
             <div className='bg-[#FFFFFF] w-[18%] h-max mt-[96px] border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center ml-10 fixed'>
               <div className='bg-[#FFFFFF] h-fit w-[100%] rounded-t-[26px] border-[#166F00] border-b-[1px]'>
-                <h1 className='text-[#000000] text-lg ml-5 my-3'>Trending</h1>
+                <h1 className='text-[#000000] text-lg ml-5 my-3 font-[QuicksandLight] font-bold'>Trending</h1>
               </div>
               <>
                 {trendingPosts && trendingPosts.map((post,index) => {
@@ -190,7 +190,7 @@ const Explore = () => {
                 })}
               </>
               <div className='bg-[#FFFFFF] h-fit w-[100%] flex justify-center items-center rounded-b-[26px] hover:bg-[#EAEAEA]'>
-                <h1 className='text-[#000000] text-lg py-2'>See More...</h1>
+                <h1 className='text-[#000000] text-lg py-2 font-[Quicksand]'>See More...</h1>
               </div>
             </div>
           </div>

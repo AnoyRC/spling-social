@@ -44,6 +44,24 @@
   --card-border-rgb: 131, 134, 135;
 }
 
+@font-face {
+    font-family: 'Quicksand';
+    src: url('./fonts/Quicksand-Regular.woff2') format('woff2'),
+        url('./fonts/Quicksand-Regular.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'QuicksandLight';
+    src: url('./fonts/Quicksand-Light.woff') format('woff2'),
+        url('./fonts/Quicksand-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
