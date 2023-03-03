@@ -102,7 +102,7 @@ const Home = () => {
   return (
     <>
       <div className='bg-[#F8FFE9] w-screen h-screen'>
-        <div className='bg-[#FFFFFF] border-[#166F00] border-b-[1px] w-screen h-16 fixed'>
+        <div className='bg-[#FFFFFF] border-[#166F00] border-b-[1px] w-screen z-10 h-16 fixed'>
           <div className='flex h-full justify-center'>
             <div className='w-1/3'></div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00] border-[1px] rounded-full flex bg-[#EAEAEA] self-center h-[65%] w-1/3'>
@@ -126,7 +126,7 @@ const Home = () => {
         <div className='bg-[#F8FFE9] h-max w-screen flex justify-center'>
           <div className='w-1/3 flex justify-end'>
             <div className='bg-[#FFFFFF] w-[17%] h-max mt-[96px] border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center mr-10 fixed'>
-              <div className='flex w-[100%] mb-2 mt-5 pl-2'>
+              <div className='flex w-[100%] mb-2 mt-7 pl-2'>
                 <div className='flex justify-start w-[100%]'>
                   <Image src="/FeedActiveIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
                   <h1 className='text-xl ml-3 text-[#166f00] font-[Quicksand]'>Your Feed</h1>

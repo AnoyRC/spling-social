@@ -91,7 +91,7 @@ const Users = () => {
   return (
     <>
       <div className='bg-[#F8FFE9] w-screen h-screen'>
-        <div className='bg-[#FFFFFF] border-[#166F00] border-b-[1px] w-screen h-16 fixed'>
+        <div className='bg-[#FFFFFF] border-[#166F00] border-b-[1px] w-screen h-16 z-10 fixed'>
           <div className='flex h-full justify-center'>
             <div className='w-1/3'></div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00] border-[1px] rounded-full flex bg-[#EAEAEA] self-center h-[65%] w-1/3'>

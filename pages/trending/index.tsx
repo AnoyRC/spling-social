@@ -31,7 +31,7 @@ const WalletMultiButtonDynamic = dynamic(
 );
 
 
-const Explore = () => {
+const Trending = () => {
   const [socialProtocol, setSocialProtocol] = useState<SocialProtocol>();
   const [walletAddress, setWalletAddress] = useState<WalletContextState>();
   const [userInfo, setUserInfo] = useState<User | null>();
@@ -69,14 +69,11 @@ const Explore = () => {
     const postInitialize = async () => {
       if(socialProtocol !== null && socialProtocol !== undefined){
         const posts = await socialProtocol.getAllPosts(33);
-        const shuffledPost = posts
-          .map(value => ({ value, sort: Math.random() }))
-          .sort((a, b) => a.sort - b.sort)
-          .map(({ value }) => value)
-        setPosts(shuffledPost);
-        const trendingPosts = posts.sort((a, b) => b.likes.length - a.likes.length).slice(0, 3);
-        setTrendingPosts(trendingPosts)
-        console.log(posts);
+        const trendingPosts = posts.sort((a, b) => b.likes.length - a.likes.length);
+        setPosts(trendingPosts);
+        console.log(trendingPosts);
+        const trendingPostsShort = posts.sort((a, b) => b.likes.length - a.likes.length).slice(0, 3);
+        setTrendingPosts(trendingPostsShort)
       }
     };
 
@@ -89,18 +86,14 @@ const Explore = () => {
     if(socialProtocol !== null && socialProtocol !== undefined){
       const posts = await socialProtocol.getAllPosts(33);
       const filteredPosts = posts.filter((post) => post.tags[0].search(text) !== -1);
-      const shuffledPost = filteredPosts
-          .map(value => ({ value, sort: Math.random() }))
-          .sort((a, b) => a.sort - b.sort)
-          .map(({ value }) => value)
-      setPosts(shuffledPost);
+      setPosts(filteredPosts);
     }
   }
 
   return (
     <>
       <div className='bg-[#F8FFE9] w-screen h-screen'>
-        <div className='bg-[#FFFFFF] border-[#166F00] border-b-[1px] w-screen z-10 h-16 fixed'>
+        <div className='bg-[#FFFFFF] border-[#166F00] border-b-[1px] w-screen h-16 fixed z-10'>
           <div className='flex h-full justify-center'>
             <div className='w-1/3'></div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00] border-[1px] rounded-full flex bg-[#EAEAEA] self-center h-[65%] w-1/3'>
@@ -130,13 +123,10 @@ const Explore = () => {
                   <h1 className='text-xl ml-3 text-[#000000] font-[Quicksand]'>Your Feed</h1>
                 </div>
               </div>
-              <div className='flex w-[100%] py-2'>
-                <div className='flex justify-start pl-2 w-[100%]'>
-                  <Image src="/ExploreActiveIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
-                  <h1 className='text-xl ml-3 text-[#166f00] font-[Quicksand]'>Explore</h1>
-                </div>
-                <div className=' flex justify-end w-[10%]'>
-                  <div className='bg-[#166f00] w-1.5 h-8 rounded-tl-md rounded-bl-md'></div>
+              <div className='flex w-[100%] py-2 hover:bg-[#EAEAEA]'>
+                <div className='flex justify-start pl-2 w-[100%] hover:cursor-pointer' onClick={()=>{window.location.href = '/explore'}}>
+                  <Image src="/ExploreIcon.svg" alt="SearchButton" width={30} height={30} className="ml-4"></Image>
+                  <h1 className='text-xl ml-3 text-[#000000] font-[Quicksand]'>Explore</h1>
                 </div>
               </div>
               <div className='flex w-[100%] py-2 pl-2 mb-4 hover:bg-[#EAEAEA] hover:cursor-pointer rounded-b-md' onClick={()=>{if(userInfo) window.location.href = `/user/${userInfo?.userId}`}}>
@@ -148,33 +138,10 @@ const Explore = () => {
             </div>
           </div>
           <div className='w-[638px]'>
-            <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-[26px] w-[100%] h-fit pb-8 mt-[96px] flex flex-col'>
-                <div className='flex ml-7 mt-4 items-center'>
-                    <Image src="/TagIcon.svg" alt="SearchButton" width={20} height={20} className=""></Image>
-                    <h1 className='text-2xl text-[#000000] ml-1.5 text-center font-[Quicksand]'>Trending tags</h1>
-                </div>
-                <div className='flex mt-4 items-center justify-center w-[100%]'>
-                    <div className='flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("programming")}>
-                        <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
-                        <h1 className='text-xl text-[#000000] ml-1.5 text-center font-[Quicksand]'>Programing</h1>
-                    </div>
-                    <div className='ml-7 flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("solana")}>
-                        <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
-                        <h1 className='text-xl text-[#000000] ml-1.5 text-center font-[Quicksand]'>Solana</h1>
-                    </div>
-                </div>
-                <div className='flex mt-4 items-center justify-center w-[100%]'>
-                    <div className='flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("hackathon")}>
-                        <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
-                        <h1 className='text-xl text-[#000000] ml-1.5 text-center font-[Quicksand]'>Hackathon</h1>
-                    </div>
-                    <div className='ml-7 flex h-fit w-[42%] bg-[#F8FFE9] border-[#166f00] border-[1px] rounded-md items-center p-2 hover:cursor-pointer' onClick={()=>handlePost("tips")}>
-                        <Image src="/TagIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
-                        <h1 className='text-xl text-[#000000] ml-1.5 text-center font-[Quicksand]'>Tips</h1>
-                    </div>
-                </div>
+            <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-[26px] w-[100%] h-fit py-5 mt-[96px] flex flex-col justify-center items-center'>
+                <h1 className='text-[#000000] font-[QuicksandBold] text-4xl text-center'>#Trending</h1>
+                <h1 className='font-[Quicksand] text-[#4e4e4e] text-center mt-2'>Explore the most popular post of our community. A constantly <br/> updating list of popular posts!!</h1>
             </div>
-
             <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-[26px] w-[100%] h-fit pb-8 mt-5 flex flex-col'>
               <div className='bg-[#FFFFFF] w-[100%] h-[35px] rounded-t-[26px] border-[#166f00] border-b-[1px] flex'>
               </div>
@@ -188,18 +155,15 @@ const Explore = () => {
             </div>
           </div>
           <div className='w-1/3'>
-            <div className='bg-[#FFFFFF] w-[18%] h-max mt-[96px] border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center ml-10 fixed'>
+          <div className='bg-[#FFFFFF] w-[18%] h-max mt-[96px] border-[#166F00] pb-7 border-[1px] rounded-[26px] flex flex-col justify-center ml-10 fixed'>
               <div className='bg-[#FFFFFF] h-fit w-[100%] rounded-t-[26px] border-[#166F00] border-b-[1px]'>
-                <h1 className='text-[#000000] text-lg ml-5 my-3 font-[QuicksandLight] font-bold'>Trending</h1>
+                <h1 className='text-[#000000] text-lg ml-5 my-3 font-[QuicksandLight] font-bold'>Top 3</h1>
               </div>
               <>
                 {trendingPosts && trendingPosts.map((post,index) => {
                   if(post.user.avatar) return <ShortPost key={index} post={post} socialProtocol={socialProtocol} user={userInfo} walletAddress={walletAddress}/>
                 })}
               </>
-              <div className='bg-[#FFFFFF] h-fit w-[100%] flex justify-center items-center rounded-b-[26px] hover:bg-[#EAEAEA]'>
-                <h1 className='text-[#000000] text-lg py-2 font-[Quicksand]'>See More...</h1>
-              </div>
             </div>
           </div>
         </div>
@@ -208,4 +172,4 @@ const Explore = () => {
   )
 }
 
-export default Explore
+export default Trending

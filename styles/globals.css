@@ -62,6 +62,15 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'QuicksandBold';
+    src: url('./fonts/Quicksand-SemiBold.woff') format('woff2'),
+        url('./fonts/Quicksand-SemiBold.woff2') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;

@@ -69,8 +69,8 @@ const Posts: NextPage<Props> = (props: Props) => {
         <h1 className="text-[#000000] text-2xl my-3 mx-7 font-[QuicksandLight] font-bold">{props.post?.title}</h1>
         <div className="flex h-fit width-[100%] mb-4">
           <h1 className="text-[#000000] text-base mx-7 w-[60%] font-[Quicksand]">{props.post?.text}</h1>
-          <div className="bg-[#5E5E5E] w-[40%] h-[140px] mr-7 rounded-xl">
-          {props?.post?.media[0].file && <Image src={props?.post?.media[0].file} alt="media" width={251} height={142} className='w-[100%] h-[100%] rounded-lg'></Image>}
+          <div className="bg-[#5E5E5E] w-[40%] h-[140px] mr-7 rounded-xl overflow-hidden">
+          {props?.post?.media[0].file && <Image src={props?.post?.media[0].file} alt="media" width={500} height={400} className='transition delay-100 ease-in w-[100%] h-[100%] opacity-80 hover:opacity-100 rounded-lg object-cover hover:scale-110 z-0'></Image>}
           </div>
         </div>
       </div>
