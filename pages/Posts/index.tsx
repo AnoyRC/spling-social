@@ -36,6 +36,7 @@ export default function Posts() {
     const [title, setTitle] = useState<string>();
     const [article, setArticle] = useState<string | undefined>();
     const [articleImage,setArticleImage]=useState<File>();
+    const [tags, setTags]=useState<string[]>([])
 
     const articleImgRef=useRef<HTMLInputElement>(null);
 
@@ -62,6 +63,26 @@ export default function Posts() {
             };
         });
     };
+    const createPostInitialization=async()=>{
+        if(articleImage){
+            const articleTmpImage=articleImage
+            let base64Img=await convertBase64(articleTmpImage)
+            const FileDataValue={
+                type:articleImage.type,
+                base64:base64Img,
+                size:articleImage.size,
+            }
+
+            const post=await socialProtocol?.createPost(
+                33,
+                title,
+                article,
+                FileDataValue as FileData[],
+                tags.toString(),
+                null,
+            )
+        }
+    }
 
     useEffect(() => {
         setWalletAddress(solanaWallet)
@@ -73,10 +94,20 @@ export default function Posts() {
                     options
                 ).init()
                 setSocialProtocol(socialProtocol)
+
+                const user=await socialProtocol.getUserByPublicKey(walletAddress?.wallet?.adapter?.publicKey)
+                    
+                setUserInfo(user)
+                console.log(tags)
+                if(!user){
+                    window.location.href="/"
+                }
             }
+            
+            
         }
         initialize()
-    }, [solanaWallet, walletAddress])
+    }, [solanaWallet, walletAddress,tags])
 
 
     return (
@@ -159,7 +190,7 @@ export default function Posts() {
                                 className="w-[100%] h-32 placeholder:text-gray-500  mt-2 p-2 focus:outline-none overflow:hidden"
 
                             />
-                            <TagsInput />
+                            <TagsInput tags={tags} setTags={setTags}/>
 
                         </div>
                     </div>
