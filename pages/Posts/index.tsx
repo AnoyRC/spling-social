@@ -68,16 +68,16 @@ export default function Posts() {
             const articleTmpImage=articleImage
             let base64Img=await convertBase64(articleTmpImage)
             const FileDataValue={
-                type:articleImage.type,
                 base64:base64Img,
                 size:articleImage.size,
+                type:articleImage.type,
             }
 
             const post=await socialProtocol?.createPost(
                 33,
                 title,
                 article,
-                FileDataValue as FileData[],
+                [FileDataValue as FileData],
                 tags.toString(),
                 null,
             )
