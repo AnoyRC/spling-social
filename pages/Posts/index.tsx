@@ -43,8 +43,8 @@ export default function Posts() {
     useAutosizeTextArea(textAreaRef.current, article)
     const solanaWallet = useWallet()
 
-    const handleChange = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
-        const val = evt.target?.value;
+    const handleChange = (evt: React.ChangeEvent<HTMLDivElement>) => {
+        const val = evt.target?.innerText;
 
         setArticle(val);
     };
@@ -115,7 +115,7 @@ export default function Posts() {
 
     return (
         <>
-            <div className='bg-[#F8FFE9] w-screen h-screen'>
+            <div className='bg-[#F8FFE9] w-screen h-max'>
 
                 <div className='bg-[#F8FFE9] h-max w-screen flex justify-center'>
                     <div className='w-1/4 flex justify-end'>
@@ -186,18 +186,10 @@ export default function Posts() {
                                 className="w-[90%] placeholder:text-gray-500 text-3xl  mt-2 h-12 p-2 focus:outline-none"
                             />
                             <div
-                                
                                 contentEditable={true}
-                                //onChange={handleChange}
-                                style={{
-                                    height: 200,
-                                    width: 200,
-                                    border: "1px solid black",
-                                    display: "table-cell",
-                                    verticalAlign: "middle",
-                                    textAlign: "left",
-                                    padding: 8
-                                }}
+                                onChange={handleChange}
+                                className="w-full h-fit p-[8px] border-none focus:outline-none"
+                                placeholder="Body..."
                             ></div>
                             <TagsInput tags={tags} setTags={setTags} />
 
