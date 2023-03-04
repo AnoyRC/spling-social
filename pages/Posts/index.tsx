@@ -188,7 +188,7 @@ export default function Posts() {
                             <div
                                 
                                 contentEditable={true}
-                                onChange={handleChange}
+                                //onChange={handleChange}
                                 style={{
                                     height: 200,
                                     width: 200,
