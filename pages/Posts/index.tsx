@@ -115,9 +115,9 @@ export default function Posts() {
 
     return (
         <>
-            <div className='bg-[#F8FFE9] w-screen h-max'>
+            <div className='bg-[#F8FFE9] w-screen min-h-screen'>
 
-                <div className='bg-[#F8FFE9] h-max w-screen flex justify-center'>
+                <div className='bg-[#F8FFE9] h-max w-screen flex justify-center '>
                     <div className='w-1/4 flex justify-end'>
                         <div className='bg-[#FFFFFF] w-[17%] h-max mt-[96px] border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center mr-10 fixed'>
                             <div className='flex w-[100%] mb-2 mt-8'>
@@ -143,62 +143,64 @@ export default function Posts() {
                             </div>
                         </div>
                     </div>
-                    <div className='w-2/4'>
-                        <div className='bg-[#FFFFFF] border-r-[#166f00] border-r-[1px] border-l-[#166f00] border-l-[1px]  w-[100%] h-screen pb-8 px-8 flex flex-col'>
-                            <div
-                                onClick={() => {
-                                    articleImgRef?.current?.click();
-                                }}
-                                className=" mt-[96px] p-[8px] rounded-full hover:cursor-pointer"
-                            >
-                                {articleImage ? (
-                                    <img
-                                        onClick={() => {
-                                            articleImgRef?.current?.click();
-                                        }}
-                                        src={URL.createObjectURL(articleImage)}
-                                        alt="avatar"
+                    <div className='w-2/4 '>
+                        
+                            <div className='bg-[#FFFFFF] w-[100%] h-fit flex flex-col pb-8 px-8 x-0 border-r-[#166f00] border-r-[1px] border-l-[#166f00] border-l-[1px] min-h-screen'>
+                                <div
+                                    onClick={() => {
+                                        articleImgRef?.current?.click();
+                                    }}
+                                    className=" mt-[96px] p-[8px] rounded-full hover:cursor-pointer"
+                                >
+                                    {articleImage ? (
+                                        <img
+                                            onClick={() => {
+                                                articleImgRef?.current?.click();
+                                            }}
+                                            src={URL.createObjectURL(articleImage)}
+                                            alt="avatar"
 
-                                    />
-                                ) : (
-                                    <div className='flex flex-row'>
-                                        <img src="/AddCover.svg" alt="ProfilePic" className='h-20px w-20px mr-2' />
-                                        <p>Add Cover</p>
-                                    </div>
-                                )}
+                                        />
+                                    ) : (
+                                        <div className='flex flex-row'>
+                                            <img src="/AddCover.svg" alt="ProfilePic" className='h-20px w-20px mr-2' />
+                                            <p>Add Cover</p>
+                                        </div>
+                                    )}
+                                </div>
+                                <input
+                                    type="file"
+                                    className="hidden"
+                                    ref={articleImgRef}
+                                    onChange={(e) => {
+                                        if (!e.target.files) return;
+                                        setArticleImage(e.target.files[0]);
+                                        console.log(e.target.files[0].type);
+                                    }}
+                                />
+
+
+                                <input
+                                    value={title}
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    placeholder="Title..."
+                                    className="w-[90%] placeholder:text-gray-500 text-3xl  mt-2 h-12 p-2 focus:outline-none"
+                                />
+                                <div
+                                    contentEditable={true}
+                                    onChange={handleChange}
+                                    className="w-full h-fit p-[8px] border-none focus:outline-none"
+                                    placeholder="Body..."
+                                ></div>
+                                <TagsInput tags={tags} setTags={setTags} />
+
                             </div>
-                            <input
-                                type="file"
-                                className="hidden"
-                                ref={articleImgRef}
-                                onChange={(e) => {
-                                    if (!e.target.files) return;
-                                    setArticleImage(e.target.files[0]);
-                                    console.log(e.target.files[0].type);
-                                }}
-                            />
-
-
-                            <input
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                                placeholder="Title..."
-                                className="w-[90%] placeholder:text-gray-500 text-3xl  mt-2 h-12 p-2 focus:outline-none"
-                            />
-                            <div
-                                contentEditable={true}
-                                onChange={handleChange}
-                                className="w-full h-fit p-[8px] border-none focus:outline-none"
-                                placeholder="Body..."
-                            ></div>
-                            <TagsInput tags={tags} setTags={setTags} />
-
-                        </div>
+                        
                     </div>
 
 
                     <div className='w-1/4 ml-3'>
-                        <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[30px] w-max-content self-center flex items-center mx-1 hover:bg-[#5f8e53] mt-[96px]' onClick={createPostInitialization}>
+                        <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[30px] w-max-content self-center flex items-center mx-1 hover:bg-[#5f8e53] mt-[96px] fixed' onClick={createPostInitialization}>
                             <Image src="/PenIcon.svg" alt="SearchButton" width={15} height={15} className="ml-7"></Image>
                             <h1 className='text-m ml-1 text-white mr-7' >Write</h1>
                         </button>
