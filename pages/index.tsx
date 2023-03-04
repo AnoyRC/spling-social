@@ -203,7 +203,7 @@ const Home = () => {
                   if(post.user.avatar) return <ShortPost key={index} post={post} socialProtocol={socialProtocol} user={userInfo} walletAddress={walletAddress}/>
                 })}
               </>
-              <div className='bg-[#FFFFFF] h-fit w-[100%] flex justify-center items-center rounded-b-[26px] hover:bg-[#EAEAEA] '>
+              <div className='bg-[#FFFFFF] h-fit w-[100%] flex justify-center items-center rounded-b-[26px] hover:bg-[#EAEAEA] hover:cursor-pointer ' onClick={()=>{window.location.href="./trending"}}>
                 <h1 className='text-[#000000] text-lg py-2 font-[Quicksand]'>See More...</h1>
               </div>
             </div>
