@@ -44,6 +44,12 @@
   --card-border-rgb: 131, 134, 135;
 }
 
+[contenteditable][placeholder]:empty:before {
+    content: attr(placeholder);
+    position: absolute;
+    color: gray;
+    background-color: transparent;
+}
 @font-face {
     font-family: 'Quicksand';
     src: url('./fonts/Quicksand-Regular.woff2') format('woff2'),

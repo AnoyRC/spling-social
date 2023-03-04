@@ -27,10 +27,10 @@ const TagsInput: NextPage<Props> = (props: Props) => {
     }
 
     return (
-        <div className="flex flex-col w-2/4">
+        <div className="w-2/4">
             <>
                 {props?.tags.map((tag, index) => {
-                    return(<div className="bg-gray-300 flex flex-row rounded-full px-2 h-[25px]" key={index}>
+                    return(<div className="bg-gray-300 flex flex-row rounded-full px-2 h-[25px] w-fit" key={index}>
                         <h1 className="">{tag}</h1>
                         <div className="bg-gray-600 rounded-full ml-1 h-[20px] w-[20px] mt-1 text-white text-center flex justify-center items-center hover:cursor-pointer" onClick={()=>{removeTag(index)}}>
                             x
