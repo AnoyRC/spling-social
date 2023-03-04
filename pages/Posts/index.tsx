@@ -35,10 +35,10 @@ export default function Posts() {
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const [title, setTitle] = useState<string>();
     const [article, setArticle] = useState<string | undefined>();
-    const [articleImage,setArticleImage]=useState<File>();
-    const [tags, setTags]=useState<string[]>([])
+    const [articleImage, setArticleImage] = useState<File>();
+    const [tags, setTags] = useState<string[]>([])
 
-    const articleImgRef=useRef<HTMLInputElement>(null);
+    const articleImgRef = useRef<HTMLInputElement>(null);
 
     useAutosizeTextArea(textAreaRef.current, article)
     const solanaWallet = useWallet()
@@ -63,17 +63,17 @@ export default function Posts() {
             };
         });
     };
-    const createPostInitialization=async()=>{
-        if(articleImage){
-            const articleTmpImage=articleImage
-            let base64Img=await convertBase64(articleTmpImage)
-            const FileDataValue={
-                base64:base64Img,
-                size:articleImage.size,
-                type:articleImage.type,
+    const createPostInitialization = async () => {
+        if (articleImage) {
+            const articleTmpImage = articleImage
+            let base64Img = await convertBase64(articleTmpImage)
+            const FileDataValue = {
+                base64: base64Img,
+                size: articleImage.size,
+                type: articleImage.type,
             }
 
-            const post=await socialProtocol?.createPost(
+            const post = await socialProtocol?.createPost(
                 33,
                 title,
                 article,
@@ -81,6 +81,9 @@ export default function Posts() {
                 tags.toString(),
                 null,
             )
+            if (post) {
+                window.location.href = "/"
+            }
         }
     }
 
@@ -95,19 +98,19 @@ export default function Posts() {
                 ).init()
                 setSocialProtocol(socialProtocol)
 
-                const user=await socialProtocol.getUserByPublicKey(walletAddress?.wallet?.adapter?.publicKey)
-                    
+                const user = await socialProtocol.getUserByPublicKey(walletAddress?.wallet?.adapter?.publicKey)
+
                 setUserInfo(user)
                 console.log(tags)
-                if(!user){
-                    window.location.href="/"
+                if (!user) {
+                    window.location.href = "/"
                 }
             }
-            
-            
+
+
         }
         initialize()
-    }, [solanaWallet, walletAddress,tags])
+    }, [solanaWallet, walletAddress, tags])
 
 
     return (
@@ -155,7 +158,7 @@ export default function Posts() {
                                         }}
                                         src={URL.createObjectURL(articleImage)}
                                         alt="avatar"
-                                        
+
                                     />
                                 ) : (
                                     <div className='flex flex-row'>
@@ -182,24 +185,30 @@ export default function Posts() {
                                 placeholder="Title..."
                                 className="w-[90%] placeholder:text-gray-500 text-3xl  mt-2 h-12 p-2 focus:outline-none"
                             />
-                            <textarea
+                            <div
+                                
+                                contentEditable={true}
                                 onChange={handleChange}
-                                ref={textAreaRef}
-                                value={article}
-                                placeholder="Body..."
-                                className="w-[100%] h-32 placeholder:text-gray-500  mt-2 p-2 focus:outline-none overflow:hidden"
-
-                            />
-                            <TagsInput tags={tags} setTags={setTags}/>
+                                style={{
+                                    height: 200,
+                                    width: 200,
+                                    border: "1px solid black",
+                                    display: "table-cell",
+                                    verticalAlign: "middle",
+                                    textAlign: "left",
+                                    padding: 8
+                                }}
+                            ></div>
+                            <TagsInput tags={tags} setTags={setTags} />
 
                         </div>
                     </div>
 
 
                     <div className='w-1/4 ml-3'>
-                        <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[30px] w-max-content self-center flex items-center mx-1 hover:bg-[#5f8e53] mt-[96px]' onClick={() => window.location.href = "./Posts"}>
+                        <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[30px] w-max-content self-center flex items-center mx-1 hover:bg-[#5f8e53] mt-[96px]' onClick={createPostInitialization}>
                             <Image src="/PenIcon.svg" alt="SearchButton" width={15} height={15} className="ml-7"></Image>
-                            <h1 className='text-m ml-1 text-white mr-7'>Write</h1>
+                            <h1 className='text-m ml-1 text-white mr-7' >Write</h1>
                         </button>
                     </div>
                 </div>

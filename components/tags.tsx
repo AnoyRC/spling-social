@@ -27,7 +27,7 @@ const TagsInput: NextPage<Props> = (props: Props) => {
     }
 
     return (
-        <div className="flex flex-row">
+        <div className="flex flex-col w-2/4">
             <>
                 {props?.tags.map((tag, index) => {
                     return(<div className="bg-gray-300 flex flex-row rounded-full px-2 h-[25px]" key={index}>
@@ -38,7 +38,7 @@ const TagsInput: NextPage<Props> = (props: Props) => {
                     </div>)
                 })}
             </>
-            <input type="text" onKeyDown={handleKeyDown} className="p-[8px]" placeholder="Type something" />
+            <input type="text" onKeyDown={handleKeyDown} className="p-[8px] flex" placeholder="Type something" />
         </div>
     )
 }
