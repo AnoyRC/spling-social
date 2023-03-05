@@ -103,7 +103,7 @@ export default function Posts() {
           );
           const filteredPosts = sortedPost
             .filter(
-              (curpost) => curpost.userId == post?.userId && post.groupId == 33
+              (curpost) => curpost.userId == post?.userId && curpost.groupId == 33
             )
             .slice(0, 3);
           setPosts(filteredPosts);
