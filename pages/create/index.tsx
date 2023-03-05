@@ -110,22 +110,23 @@ export default function Posts() {
         setUserInfo(user);
         console.log(user);
         if(user!==null) setStatus(true)
+        if(user!==null)  postInitialize(user);
       }
     };
 
-    const postInitialize = async () => {
-      if(socialProtocol !== null && socialProtocol !== undefined){
-        const posts = await socialProtocol.getAllPosts(33);
-        const sortedPost = await posts.sort((a,b) => b.timestamp - a.timestamp )
-        const filteredPosts = sortedPost.filter((post) => post.userId == userInfo?.userId && post.groupId == 33).slice(0,3);
+    const postInitialize = async (user:User | undefined) => {
+      if(socialProtocol && user){
+        const posts = await socialProtocol.getAllPostsByUserId(user?.userId);
+        const sortedPost = posts.sort((a,b) => b.timestamp - a.timestamp )
+        const filteredPosts = sortedPost.filter((post) => post.groupId == 33).slice(0,3);
         setPosts(filteredPosts);
       }
     };
 
     Initialize();
     userIntitialize();
-    postInitialize();
-  }, [solanaWallet, walletAddress, tags]);
+    
+  }, [solanaWallet, tags]);
 
   return (
     <>
@@ -278,7 +279,7 @@ export default function Posts() {
               <>
                 {(posts && posts.map((post,index) => {
                   if(post.user.avatar) return <ShortPost key={index} post={post} socialProtocol={socialProtocol} user={userInfo} walletAddress={walletAddress}/>
-                })) || <h1 className="text-[#5E5E5E] italic text-center px-3">{`"Publish your first post and join our community of awesome builders"`}</h1>}
+                })) || <h1 className="text-[#5E5E5E] italic text-center mt-3 px-3">{`"Publish your first post and join our community of awesome builders"`}</h1>}
               </>
             </div>
            
