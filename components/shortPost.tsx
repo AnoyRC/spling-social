@@ -13,7 +13,7 @@ interface Props {
 
 const shortPost: NextPage<Props> = (props: Props) => {
     return(
-    <div className="w-[100%] h-fit border-[#166f00] border-b-[1px]">
+    <div className="w-[100%] h-fit border-[#166f00] border-b-[1px] hover:bg-[#f2f2f2] hover:cursor-pointer transition ease-out" onClick={()=>{window.location.href = `/post/${props.post?.postId}`}}>
         <div className="flex mx-5 pt-4 pb-2">
         {props.post?.user.avatar && (
           <Image

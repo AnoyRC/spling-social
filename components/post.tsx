@@ -48,7 +48,7 @@ const Posts: NextPage<Props> = (props: Props) => {
 
   return (
     <div className="bg-[#FFFFFF] border-[#166f00] border-b-[1px] w-[100%] h-fit">
-      <div className="ml-7 mt-4 flex">
+      <div className="ml-7 mt-4 flex hover:cursor-pointer" onClick={()=>{window.location.href = `/user/${props.post?.userId}`}}>
         {props.post?.user.avatar && (
           <Image
             src={props.post?.user.avatar}
@@ -66,7 +66,7 @@ const Posts: NextPage<Props> = (props: Props) => {
         </div>
       </div>
       <div>
-        {props.post?.title && <h1 className="text-[#000000] text-2xl my-3 mx-7 font-[QuicksandLight] font-bold">{props.post?.title.length < 63 ? props.post?.title : props.post?.title.substring(0,63) + "..."}</h1>}
+        {props.post?.title && <h1 className="text-[#000000] text-2xl my-3 mx-7 font-[QuicksandLight] font-bold hover:cursor-pointer" onClick={()=>{window.location.href = `/post/${props.post?.postId}`}}>{props.post?.title.length < 63 ? props.post?.title : props.post?.title.substring(0,63) + "..."}</h1>}
         <div className="flex h-fit width-[100%] mb-4">
           {props.post && <h1 className="text-[#000000] text-base mx-7 w-[60%] font-[Quicksand]">{props.post?.text.length < 240 ? props.post?.text : props.post?.text.substring(0,239) + "..."}</h1>}
           <div className="bg-[#5E5E5E] w-[40%] h-[140px] mr-7 rounded-xl overflow-hidden">
