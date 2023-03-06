@@ -111,14 +111,14 @@ const Home = () => {
               <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none"></input>
               </div>
               <div className='flex w-1/3 justify-center'>
-              <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53]' onClick={()=>window.location.href="./create"}>
+              <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53]' onClick={()=>window.location.href="/create"}>
                 <Image src="/PenIcon.svg" alt="SearchButton" width={15} height={15} className="ml-5"></Image>
-                <h1 className='text-m ml-1 text-white font-[Quicksand] font-normal'>Write</h1>
+                <h1 className='text-m ml-1 text-[#ffffff] font-[Quicksand] font-normal'>Write</h1>
               </button>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1'>
                 <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
               </div>
-              <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 mr-[10%] hover:cursor-pointer' onClick={()=>{setToggle(true)}}>
+              <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 mr-[10%] hover:cursor-pointer' onClick={()=>{setToggle(!toggle)}}>
                 <Image src="/AccountIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
               </div>
               </div>
@@ -137,13 +137,21 @@ const Home = () => {
               <h1 className="text-[#505050] text-xl font-[QuicksandBold] text-center mt-3">
                 {userInfo?.nickname}
               </h1>
-              <div className='flex mt-3 justify-center items-center border-[#166f00] border-[1px] rounded-full px-2 mb-3'>
+              <div className='flex mt-3 justify-center items-center border-[#166f00] border-[1px] rounded-full px-2 mb-4'>
                 <div className='bg-[#37ff05] rounded-full h-[13px] w-[13px] shadow-lg shadow-[#37ff05]'></div>
                 <h1 className="text-[#505050] text-md font-[Quicksand] text-center ml-1">
                   Connected
                 </h1>
               </div>
             </div>
+            }
+            { !userInfo && toggle &&
+              <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-xl h-fit w-[15%] fixed ml-[78%] mt-3 flex flex-col items-center '>
+              <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center flex items-center justify-center p-1 m-3 mb-1 hover:bg-[#5f8e53]' onClick={()=>window.location.href="/connect"}>
+                <h1 className='text-m  text-white font-[Quicksand] font-normal text-center'>Connect</h1>
+              </button>
+              <h1 className='text-[#505050] text-center px-3 text-sm mb-3'>Connect your wallet to access additional features and support the community</h1>
+              </div>
             }
         </div>
         <div className='bg-[#F8FFE9] h-max w-screen flex justify-center'>
