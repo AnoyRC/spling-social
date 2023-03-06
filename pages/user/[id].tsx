@@ -40,6 +40,7 @@ const Users = () => {
   const [posts, setPosts] = useState<Post[]>();
   const [isFeatured, setIsFeatured] = useState<boolean>(false);
   const [userQuery, setUserQuery] = useState<User>();
+  const [isFollowing, setIsFollowing] = useState<boolean>(false);
   const router = useRouter()
 
   const solanaWallet = useWallet();
@@ -87,6 +88,32 @@ const Users = () => {
     userIntitialize();
     postInitialize();
   }, [solanaWallet,walletAddress]);
+
+  useEffect(()=>{
+    if(userInfo && userQuery){
+      if(userInfo.following.includes(userQuery.userId)){
+        setIsFollowing(true);
+      }
+      else{
+        setIsFollowing(false);
+      }
+    }
+  },[userInfo,userQuery])
+
+
+
+  const handleFollow = async(follow : boolean) => {
+    if (userInfo && userQuery) {
+      if (follow) {
+        await socialProtocol?.followUser(userQuery?.userId);
+        setIsFollowing(true);
+      }
+      else{
+        await socialProtocol?.unfollowUser(userQuery?.userId);
+        setIsFollowing(false);
+      }
+    }
+  }
 
   return (
     <>
@@ -191,13 +218,9 @@ const Users = () => {
                className="rounded-full h-[150px] w-[150px]"
               ></Image>
             )}
-            <h1 className='text-[#000000] text-2xl mt-4 font-[Quicksand]'>{userQuery?.nickname}</h1>
+            <h1 className='text-[#000000] text-2xl mt-4 font-[Quicksand] text-center'>{userQuery?.nickname}</h1>
             <h1 className='text-[#000000] text-sm px-7 text-center mt-1 font-[Quicksand]'>{userQuery?.bio}</h1>
-            <div className='flex justify-between mx-10 w-[70%] mb-5 font-[Quicksand]'>
-              <div className='flex flex-col justify-center items-center font-[Quicksand]'>
-                <h1 className='text-[#000000] text-lg mt-4 font-[Quicksand] '>Followers</h1>
-                <h1 className='text-[#000000] text-lg font-[Quicksand]'>{userQuery?.groups.length}</h1>
-              </div>
+            <div className='flex justify-center mx-10 w-[70%] mb-5 font-[Quicksand]'>
               <div className='flex flex-col justify-center items-center'>
                 <h1 className='text-[#000000] text-lg mt-4 = font-[Quicksand]'>Following</h1>
                 <h1 className='text-[#000000] text-lg font-[Quicksand]'>{userQuery?.following.length}</h1>
@@ -205,8 +228,8 @@ const Users = () => {
             </div>
             </div>
               </div>
-              {userQuery?.userId !== userInfo?.userId && <button className='transition ease-in delay-100 bg-[#166F00] rounded-2xl my-5 h-fit py-2 px-10 w-fit self-center justify-center flex items-center hover:bg-[#5f8e53]'>
-                <h1 className='text-m ml-1 font-[Quicksand]'>Follow</h1>
+              {userQuery?.userId !== userInfo?.userId && <button className='transition ease-in delay-100 bg-[#166F00] rounded-2xl my-5 h-fit py-2 px-10 w-fit self-center justify-center flex items-center hover:bg-[#5f8e53]' onClick={()=>{isFollowing ? handleFollow(false) : handleFollow(true)}}>
+                <h1 className='text-m ml-1 font-[Quicksand]'>{!isFollowing ? `Follow`: `Unfollow`}</h1>
               </button>}
             </div>
           </div>

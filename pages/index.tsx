@@ -41,6 +41,7 @@ const Home = () => {
   const [trendingPosts, setTrendingPosts] = useState<Post[]>();
   const [personalizedPosts, setPersonalizedPosts] = useState<Post[]>();
   const [loadPersonalized, setLoadPersonalized] = useState<boolean>(false);
+  const [toggle, setToggle] = useState<boolean>(false);
   const solanaWallet = useWallet();
 
   useEffect(() => {
@@ -117,11 +118,33 @@ const Home = () => {
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1'>
                 <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
               </div>
-              <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 mr-[10%]'>
+              <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 mr-[10%] hover:cursor-pointer' onClick={()=>{setToggle(true)}}>
                 <Image src="/AccountIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
               </div>
               </div>
             </div>
+            {userInfo && toggle && <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-xl h-fit w-[15%] fixed ml-[78%] mt-3 flex flex-col items-center'>
+              <div className='rounded-t-xl bg-[#EAEAEA] w-[100%] h-[30%] overflow-hidden'>
+              <Image src="/CloseIcon.svg" alt="CloseButton" width={25} height={20} className="mt-2 ml-[89%] transition ease-out hover:rotate-90 absolute z-10 hover:cursor-pointer" onClick={()=>{setToggle(false)}}></Image>
+              {userInfo.avatar && <Image
+                src={userInfo?.avatar}
+                alt="avatar"
+                width={300}
+                height={300}
+                className="object-cover opacity-90 hover:opacity-100 hover:scale-110 z-0 transition ease-out delay-100"
+                ></Image>}
+              </div>
+              <h1 className="text-[#505050] text-xl font-[QuicksandBold] text-center mt-3">
+                {userInfo?.nickname}
+              </h1>
+              <div className='flex mt-3 justify-center items-center border-[#166f00] border-[1px] rounded-full px-2 mb-3'>
+                <div className='bg-[#37ff05] rounded-full h-[13px] w-[13px] shadow-lg shadow-[#37ff05]'></div>
+                <h1 className="text-[#505050] text-md font-[Quicksand] text-center ml-1">
+                  Connected
+                </h1>
+              </div>
+            </div>
+            }
         </div>
         <div className='bg-[#F8FFE9] h-max w-screen flex justify-center'>
           <div className='w-1/3 flex justify-end'>
