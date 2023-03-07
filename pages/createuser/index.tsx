@@ -84,7 +84,7 @@ const CreateUser=()=>{
                     bio
                   );
                   if(user){
-                    window.location.href = '/GroupFeed'
+                    window.location.href = '/'
                   }
                   console.log(user);
                 //};
@@ -142,7 +142,7 @@ const CreateUser=()=>{
                         ) : (
                             <div className="flex flex-row">
                                 <img
-                                    src="/AccountIcon.svg"
+                                    src="/UploadProfileIcon.svg"
                                     alt="ProfilePic"
                                     className="h-[120px] w-[120px] "
                                 />
@@ -177,7 +177,7 @@ const CreateUser=()=>{
                         Sign Up
                     </button>
 
-                    <p className="text-center py-2 font-[QuicksandBold] w-[307px] self-center">
+                    <p className="text-center py-2 font-[Quicksand] w-[307px] self-center text-[#000000]">
                         One time sign-up to access
                         the budding community
                     </p>
