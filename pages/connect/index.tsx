@@ -14,6 +14,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useState } from 'react';
 import { Keypair } from '@solana/web3.js';
 
+
 const inter = Inter({ subsets: ['latin'] })
 
 const options = {
@@ -54,24 +55,13 @@ export default function ConnectPage() {
                     options
                 ).init();
                 setSocialProtocol(socialProtocol);
-
-                //     const promise = async () => {
-                //       if (walletAddress?.wallet?.adapter?.publicKey) {
-                //         const user = await socialProtocol.getUserByPublicKey(
-                //           walletAddress?.wallet?.adapter?.publicKey
-                //         );
-                //         setUserInfo(user);
-                //         if (user?.bio) {
-                //           let bios: any = JSON.parse(user?.bio);
-                //           setBio(bios);
-                //         }
-                //       }
-                //     };
-                //     toast.promise(promise(), {
-                //       pending: "Initializing",
-                //       success: "Profile Initialized",
-                //       error: "Error Initializing",
-                //     });
+                const user=await socialProtocol.getUserByPublicKey(walletAddress?.wallet?.adapter?.publicKey)
+                if(user){
+                    window.location.href="/"
+                }
+                else{
+                    window.location.href="./createuser"
+                }
             }
         };
         initialize();
@@ -80,12 +70,15 @@ export default function ConnectPage() {
 
         <div className='w-full h-screen  bg-[#F8FFE9]'>
             <div className=' flex justify-center items-center flex-col h-screen '>
-                <div className='border-[#166F00] border-[1px] rounded-[26px] p-20'>
-                    <h2 className="text-2xl text-center">Welcome to Spling Gym</h2>
-                    <div className='items-center flex justify-center m-0'><WalletMultiButtonDynamic /></div>
+                <div className='border-[#166F00] border-[1px] rounded-[26px] flex p-20 flex-col bg-white'>
+                    <div>
+
+                    </div>
+                    <Image src="./AccountIcon.svg" alt='AccountIcon'  width={240} height={240} className="self-center"/>
+                    <div className='items-center flex justify-center py-3'><WalletMultiButtonDynamic /></div>
                     
-                    <p className="text-center">
-                        Connect your phantom wallet to continue
+                    <p className="text-center py-2 font-[QuicksandBold]">
+                        Step into the community of solana devs
                     </p>
                 </div>
 
