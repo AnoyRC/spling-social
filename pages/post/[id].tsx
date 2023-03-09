@@ -211,6 +211,12 @@ export default function Posts() {
             }
             { !userInfo && toggle &&
               <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-xl h-fit w-[15%] fixed ml-[78%] mt-3 flex flex-col items-center '>
+                <div className='flex mt-3 justify-center items-center border-[#166f00] border-[1px] rounded-full px-2'>
+                  <div className='bg-[#ff0000] rounded-full h-[13px] w-[13px] shadow-lg shadow-[#ff4a4a]'></div>
+                  <h1 className="text-[#505050] text-md font-[Quicksand] text-center ml-1">
+                    Not Connected
+                  </h1>
+                </div>
               <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center flex items-center justify-center p-1 m-3 mb-1 hover:bg-[#5f8e53]' onClick={()=>window.location.href="/connect"}>
                 <h1 className='text-m  text-white font-[Quicksand] font-normal text-center'>Connect</h1>
               </button>

@@ -37,10 +37,6 @@ export default function ConnectPage() {
     const [socialProtocol, setSocialProtocol] = useState<SocialProtocol>();
     const [walletAddress, setWalletAddress] = useState<WalletContextState>();
     const [userInfo, setUserInfo] = useState<User | null>();
-    const [status, setStatus] = useState<boolean>(false);
-    const [posts, setPosts] = useState<Post[]>();
-    const [isFeatured, setIsFeatured] = useState<boolean>(true);
-
     const solanaWallet = useWallet();
 
 
@@ -55,29 +51,34 @@ export default function ConnectPage() {
                     options
                 ).init();
                 setSocialProtocol(socialProtocol);
-                const user=await socialProtocol.getUserByPublicKey(walletAddress?.wallet?.adapter?.publicKey)
-                if(user){
-                    window.location.href="/"
-                }
-                else{
-                    window.location.href="./createuser"
+                if (!userInfo) {
+                  await socialProtocol
+                    .getUserByPublicKey(
+                      walletAddress?.wallet?.adapter?.publicKey
+                    )
+                    .then((user) => {
+                      console.log(user);
+                      setUserInfo(user)
+                      if (user) {
+                        window.location.href = "/";
+                      } else {
+                        window.location.href = "./createuser";
+                      }
+                    });
                 }
             }
         };
         initialize();
-    }, [solanaWallet, walletAddress]);
+    }, [solanaWallet]);
     return (
 
         <div className='w-full h-screen  bg-[#F8FFE9]'>
             <div className=' flex justify-center items-center flex-col h-screen '>
-                <div className='border-[#166F00] border-[1px] rounded-[26px] flex p-20 flex-col bg-white'>
-                    <div>
-
-                    </div>
+                <div className='border-[#166F00] border-[1px] rounded-[26px] flex p-16 flex-col bg-white'>
                     <Image src="./AccountIcon.svg" alt='AccountIcon'  width={240} height={240} className="self-center"/>
-                    <div className='items-center flex justify-center py-3'><WalletMultiButtonDynamic /></div>
+                    <div className='items-center flex justify-center pt-3'><WalletMultiButtonDynamic /></div>
                     
-                    <p className="text-center py-2 font-[QuicksandBold]">
+                    <p className="text-center font-[Quicksand] text-[#000000]">
                         Step into the community of solana devs
                     </p>
                 </div>
