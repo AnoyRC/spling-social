@@ -42,6 +42,7 @@ const Home = () => {
   const [personalizedPosts, setPersonalizedPosts] = useState<Post[]>();
   const [loadPersonalized, setLoadPersonalized] = useState<boolean>(false);
   const [toggle, setToggle] = useState<boolean>(false);
+  const [search,setSearch]=useState<string>("");
   const solanaWallet = useWallet();
 
   useEffect(() => {
@@ -108,7 +109,7 @@ const Home = () => {
             <div className='w-1/3'></div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00] border-[1px] rounded-full flex bg-[#EAEAEA] self-center h-[65%] w-1/3'>
               <Image src="/SearchBtn.svg" alt="SearchButton" width={20} height={20} className="ml-4"></Image>
-              <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none"></input>
+              <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none" onChange={(e)=>{setSearch(e.target.value)}}></input>
               </div>
               <div className='flex w-1/3 justify-center'>
               <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53]' onClick={()=>window.location.href="/create"}>
@@ -213,11 +214,11 @@ const Home = () => {
                 <div className='bg-[#166f00] justify-end flex flex-col w-[85%] h-[4px] self-center rounded-t-md ml-7'></div>
               </div></>}
               </div>
-              <>
+              {/* <>
               {isFeatured && (posts && posts.map((post,index) => {
                 if(post.user.avatar)
                   return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />}))}
-              </>
+              </> */}
               {isFeatured && posts?.length === 0 && <h1 className='text-[#5E5E5E] italic text-center mt-6'>{`"Touch Some Grass, after you come back you will see some posts here!!"`}</h1>}
 
               <>
@@ -225,6 +226,15 @@ const Home = () => {
                 if(post.user.avatar)
                   return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />}))}
               </>
+              {
+                isFeatured  && (posts && posts.filter((post)=>{
+                  
+                  return search.toLowerCase()===""?post:post.title?.toLowerCase().includes(search.toLowerCase())
+                }).map((post,index)=>{
+                  if(post.user.avatar)
+                    return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress={walletAddress} />
+                }))
+              }
               {!isFeatured && !loadPersonalized && <h1 className='text-[#5E5E5E] italic text-center mt-6'>{`"Loading..."`}</h1>}
               {!isFeatured && loadPersonalized && personalizedPosts?.length === 0 && <h1 className='text-[#5E5E5E] italic text-center mt-6'>{`"Guess What, You follow noone or the ones you follow doesn't like to post!!"`}</h1>}
 
