@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { Keypair } from '@solana/web3.js';
 import Posts from '@/components/post';
 import ShortPost from '@/components/shortPost';
+import {useTheme} from 'next-themes'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -43,12 +44,23 @@ const Home = () => {
   const [loadPersonalized, setLoadPersonalized] = useState<boolean>(false);
   const [toggle, setToggle] = useState<boolean>(false);
   const [search,setSearch]=useState<string>("");
+  const {theme,setTheme}=useTheme();
+  const [mounted,setMounted] = useState<boolean>(false);
   const solanaWallet = useWallet();
 
+  //const currentTheme=theme==='system'?systemTheme:theme;
+  
+  //if(!mounted)return null
+  const handleThemeSwitch = () => {
+    
+    setTheme(theme==="dark"?"light":"dark")
+  }
+  
   useEffect(() => {
     setWalletAddress(solanaWallet);
 
     const Initialize = async () => {
+      setMounted(true)
       if(walletAddress?.wallet?.adapter?.publicKey){
         const socialProtocol : SocialProtocol = await new SocialProtocol(solanaWallet, null, options).init();
         setSocialProtocol(socialProtocol);
@@ -103,8 +115,8 @@ const Home = () => {
 
   return (
     <>
-      <div className='bg-[#F8FFE9] w-screen h-screen'>
-        <div className='bg-[#FFFFFF] border-[#166F00] border-b-[1px] w-screen z-10 h-16 fixed'>
+      <div className='bg-[#F8FFE9]  w-screen h-screen '>
+        <div className='bg-[#FFFFFF] dark:bg-gray-600 border-[#166F00] border-b-[1px] w-screen z-10 h-16 fixed'>
           <div className='flex h-full justify-center'>
             <div className='w-1/3'></div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00] border-[1px] rounded-full flex bg-[#EAEAEA] self-center h-[65%] w-1/3'>
@@ -117,7 +129,7 @@ const Home = () => {
                 <h1 className='text-m ml-1 text-[#ffffff] font-[Quicksand] font-normal'>Write</h1>
               </button>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1'>
-                <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
+                <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className="hover:cursor-pointer" onClick={handleThemeSwitch}></Image>
               </div>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 mr-[10%] hover:cursor-pointer' onClick={()=>{setToggle(!toggle)}}>
                 <Image src="/AccountIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
@@ -161,7 +173,7 @@ const Home = () => {
               </div>
             }
         </div>
-        <div className='bg-[#F8FFE9] h-max w-screen flex justify-center'>
+        <div className='bg-[#F8FFE9] dark:bg-black h-max w-screen flex justify-center'>
           <div className='w-1/3 flex justify-end'>
             <div className='bg-[#FFFFFF] w-[17%] h-max mt-[96px] border-[#166F00] border-[1px] rounded-[26px] flex flex-col justify-center mr-10 fixed'>
               <div className='flex w-[100%] mb-2 mt-7 pl-2'>
@@ -229,7 +241,7 @@ const Home = () => {
               {
                 isFeatured  && (posts && posts.filter((post)=>{
                   
-                  return search.toLowerCase()===""?post:post.title?.toLowerCase().includes(search.toLowerCase())
+                  return search.toLowerCase()===""?post:(post.title?.toLowerCase().includes(search.toLowerCase())||post.tags?.toLocaleString().toLowerCase().includes(search.toLowerCase())||post.user.nickname.toLowerCase().includes(search.toLowerCase()))
                 }).map((post,index)=>{
                   if(post.user.avatar)
                     return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress={walletAddress} />
