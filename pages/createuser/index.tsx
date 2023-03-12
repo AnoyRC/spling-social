@@ -121,9 +121,9 @@ const CreateUser=()=>{
     }, [solanaWallet, walletAddress]);
     return (
 
-        <div className='w-full h-screen  bg-[#F8FFE9]'>
+        <div className='w-full h-screen  bg-[#F8FFE9] dark:bg-[#10332E] dark:border-[#40675F]'>
             <div className=' flex justify-center items-center flex-col h-screen '>
-                <div className='border-[#166F00] border-[1px] rounded-[26px] flex flex-col bg-white p-5'>
+                <div className='border-[#166F00] border-[1px] rounded-[26px] flex flex-col bg-white p-5 dark:bg-[#10332E] dark:border-[#40675F]'>
                     <div
                         onClick={() => {
                             avatarRef?.current?.click();
@@ -137,7 +137,7 @@ const CreateUser=()=>{
                                 }}
                                 src={URL.createObjectURL(avatar)}
                                 alt="avatar"
-                                className='rounded-full h-[120px] w-[120px] border-4 border-[#166F00]'
+                                className='rounded-full h-[120px] w-[120px] border-4 border-[#166F00] dark:bg-[#264D49] dark:border-[#40675F]'
                             />
                         ) : (
                             <div className="flex flex-row">
@@ -164,20 +164,20 @@ const CreateUser=()=>{
                         value={userName}
                         onChange={(e) => setUserName(e.target.value)}
                         placeholder="Username"
-                        className="bg-[#EAEAEA] w-[430px]  rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none  self-center mb-6 p-2 border-[1px] border-[#166F00]"
+                        className="bg-[#EAEAEA] w-[430px]  rounded-full text-[#8C8C8C] dark:text-gray-300 font-[Quicksand] mx-2 focus:outline-none  self-center mb-6 p-2 border-[1px] border-[#166F00] dark:bg-[#264D49] dark:border-[#264D49] dark:hover:border-[#40675F]"
                     />
                     <textarea
                         value={bio}
                         onChange={(e) => setBio(e.target.value)}
                         placeholder="Bio"
-                        className="bg-[#EAEAEA] w-[430px] h-[203px] rounded-lg text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none mb-6 p-2 border-[1px] border-[#166F00]"
+                        className="bg-[#EAEAEA] w-[430px] h-[203px] rounded-lg text-[#8C8C8C] dark:text-gray-300 font-[Quicksand] mx-2 focus:outline-none mb-6 p-2 border-[1px] border-[#166F00] dark:bg-[#264D49] dark:border-[#264D49] dark:hover:border-[#40675F]"
                     />
 
                     <button className='bg-[#166F00] w-[40%] self-center font-[QuicksandBold] text-lg text-white p-2 rounded-xl' onClick={createuser}>
                         Sign Up
                     </button>
 
-                    <p className="text-center py-2 font-[Quicksand] w-[307px] self-center text-[#000000]">
+                    <p className="text-center py-2 font-[Quicksand] w-[307px] self-center text-[#000000] dark:text-gray-300">
                         One time sign-up to access
                         the budding community
                     </p>
