@@ -72,13 +72,13 @@ export default function ConnectPage() {
     }, [solanaWallet]);
     return (
 
-        <div className='w-full h-screen  bg-[#F8FFE9]'>
+        <div className='w-full h-screen  bg-[#F8FFE9] dark:bg-[#10332E]'>
             <div className=' flex justify-center items-center flex-col h-screen '>
-                <div className='border-[#166F00] border-[1px] rounded-[26px] flex p-16 flex-col bg-white'>
+                <div className='border-[#166F00] border-[1px] rounded-[26px] flex p-16 flex-col bg-white dark:bg-[#10332E] dark:border-[#40675F]'>
                     <Image src="./AccountIcon.svg" alt='AccountIcon'  width={240} height={240} className="self-center"/>
                     <div className='items-center flex justify-center pt-3'><WalletMultiButtonDynamic /></div>
                     
-                    <p className="text-center font-[Quicksand] text-[#000000]">
+                    <p className="text-center font-[Quicksand] text-[#000000] dark:text-gray-300">
                         Step into the community of solana devs
                     </p>
                 </div>

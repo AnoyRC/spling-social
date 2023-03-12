@@ -167,6 +167,7 @@ a {
 
 .wallet-adapter-button-trigger {
     background-color: green;
+    
 }
 
 .wallet-adapter-button:not([disabled]):focus-visible {
