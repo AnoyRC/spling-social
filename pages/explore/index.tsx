@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { Keypair } from '@solana/web3.js';
 import Posts from '@/components/post';
 import ShortPost from '@/components/shortPost';
+import { useTheme } from 'next-themes';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -39,11 +40,19 @@ const Explore = () => {
   const [posts, setPosts] = useState<Post[]>();
   const [trendingPosts, setTrendingPosts] = useState<Post[]>();
   const [toggle, setToggle] = useState<boolean>(false);
+  const [search,setSearch]=useState<string>('');
+  const {theme,setTheme} = useTheme();
 
   const solanaWallet = useWallet();
 
+  const handleThemeSwitch = () => {
+    
+    setTheme(theme==="dark"?"light":"dark")
+  }
+
   useEffect(() => {
     setWalletAddress(solanaWallet);
+    
 
     const Initialize = async () => {
       if(walletAddress?.wallet?.adapter?.publicKey){
@@ -106,7 +115,7 @@ const Explore = () => {
             <div className='w-1/3'></div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00] border-[1px] rounded-full flex bg-[#EAEAEA] self-center h-[65%] w-1/3 dark:bg-[#10332E] dark:border-[#40675F]'>
               <Image src="/SearchBtn.svg" alt="SearchButton" width={20} height={20} className="ml-4"></Image>
-              <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none dark:bg-[#10332E] dark:border-[#40675F] dark:text-gray-300"></input>
+              <input type="text" placeholder="Search posts in this page" className="bg-[#EAEAEA] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none dark:bg-[#10332E] dark:border-[#40675F] dark:text-gray-300" onChange={(e)=>{setSearch(e.target.value)}}></input>
               </div>
               <div className='flex w-1/3 justify-center'>
               <button className='transition ease-in delay-100 bg-[#166F00] dark:bg-[#264D49] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53] dark:hover:bg-[#40675F]' onClick={()=>window.location.href="/create"}>
@@ -114,7 +123,7 @@ const Explore = () => {
                 <h1 className='text-m ml-1 text-[#ffffff] font-[Quicksand] font-normal dark:text-gray-300'>Write</h1>
               </button>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 dark:bg-[#10332E] dark:border-[#40675F]'>
-                <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
+                <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className="hover:cursor-pointer" onClick={handleThemeSwitch}></Image>
               </div>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 mr-[10%] hover:cursor-pointer dark:bg-[#10332E] dark:border-[#40675F]' onClick={()=>{setToggle(!toggle)}}>
                 <Image src="/AccountIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
@@ -216,7 +225,9 @@ const Explore = () => {
               <div className='bg-[#FFFFFF] w-[100%] h-[35px] rounded-t-[26px] border-[#166f00] border-b-[1px] flex dark:bg-[#10332E] dark:border-[#40675F]'>
               </div>
               <>
-              {(posts && posts.map((post,index) => {
+              {(posts && posts.filter((post)=>{
+                return search.toLowerCase()===''?posts:(post.title?.toLowerCase().includes(search.toLowerCase())||post.tags.toLocaleString().toLowerCase().includes(search.toLowerCase())||post.user.nickname.toLowerCase().includes(search.toLowerCase()))
+              }).map((post,index) => {
                 if(post.user.avatar)
                   return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />})) || 
                   <h1 className='text-[#5E5E5E] italic text-center mt-6'>{`"Touch Some Grass, after you come back you will see some posts here!!"`}</h1>}
