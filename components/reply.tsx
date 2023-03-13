@@ -54,7 +54,7 @@ const ReplyBody : NextPage<Props> = (props: Props) => {
     }
 
     return (
-      <div className="flex flex-col border-[#166f00] border-b-[1px] pb-4">
+      <div className="flex flex-col border-[#166f00] border-b-[1px] pb-4 dark:bg-[#10332E] dark:border-[#40675F]">
         <div className="flex ml-5 mt-2">
           {props.reply?.user.avatar && (
             <Image
@@ -66,14 +66,14 @@ const ReplyBody : NextPage<Props> = (props: Props) => {
             ></Image>
           )}
           <div className="flex flex-col ml-2">
-            <h1 className="text-[#505050] text-md font-[Quicksand]">
+            <h1 className="text-[#505050] text-md font-[Quicksand] dark:text-gray-300">
               {props.reply?.user.nickname}
             </h1>
-            <h1 className="text-[#5E5E5E] text-sm font-[Quicksand]">{date?.toString()}</h1>
+            <h1 className="text-[#5E5E5E] text-sm font-[Quicksand] dark:text-gray-300">{date?.toString()}</h1>
           </div>
         </div>
         <div className="flex flex-col ml-5 mt-2 pr-5">
-            <h1 className="text-[#505050] text-md font-[Quicksand]">{props.reply?.text}</h1>
+            <h1 className="text-[#505050] text-md font-[Quicksand] dark:text-gray-300">{props.reply?.text}</h1>
         </div>
       </div>
     );
