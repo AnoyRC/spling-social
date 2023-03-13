@@ -50,7 +50,7 @@ export default function Posts() {
   const solanaWallet = useWallet();
 
   const handleThemeSwitch=()=>{
-
+    setTheme(theme==="dark"?"light":"dark")
   }
 
   useEffect(() => {
@@ -179,7 +179,7 @@ export default function Posts() {
             <div className='w-1/3'></div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00]  dark:hover:border-[#40675F] border-[1px] dark:border-[#264D49] rounded-full flex bg-[#EAEAEA] dark:bg-[#264D49] self-center h-[65%] w-1/3'>
               <Image src="/SearchBtn.svg" alt="SearchButton" width={20} height={20} className="ml-4"></Image>
-              <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] dark:bg-[#264D49] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none" onChange={(e)=>{setSearch(e.target.value)}}></input>
+              <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] dark:bg-[#264D49] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none" onClick={()=>{window.location.href="/"}}></input>
               </div>
               <div className='flex w-1/3 justify-center'>
               <button className='transition ease-in delay-100 bg-[#166F00] dark:bg-[#264D49] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53] dark:hover:bg-[#40675F]' onClick={()=>window.location.href="/create"}>
@@ -397,7 +397,7 @@ export default function Posts() {
                         className="w-[fit] h-[fit] text-[#000000] bg-[#F8FFE9] border-[#166f00] border-[1px] px-2 py-0.5 rounded-full mr-5 mt-2 hover:bg-[#166f00] transition ease-out hover:text-[#ffffff] dark:bg-[#10332E] dark:border-[#40675F] dark:hover:bg-[#40675F]"
                         onClick={handleReplies}
                       >
-                        <h1 className="font-[Quicksand]">Submit</h1>
+                        <h1 className="font-[Quicksand] dark:text-gray-300">Submit</h1>
                       </button>
                     </div>
                   </div>

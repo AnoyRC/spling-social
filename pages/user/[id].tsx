@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { Keypair } from '@solana/web3.js';
 import Posts from '@/components/post';
 import ShortPost from '@/components/shortPost';
+import { useTheme } from 'next-themes';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -44,6 +45,7 @@ const Users = () => {
   const [toggle, setToggle] = useState<boolean>(false);
   const router = useRouter()
   const [search, setSearch] =useState<string>('')
+  const{theme, setTheme} = useTheme()
 
   const solanaWallet = useWallet();
 
@@ -117,7 +119,7 @@ const Users = () => {
     }
   }
   const handleThemeSwitch=()=>{
-
+    setTheme(theme==="dark"?"light":"dark")
   }
 
   return (
@@ -267,7 +269,9 @@ const Users = () => {
               </div></>}
               </div>
               <>
-              {posts && posts.map((post,index) => {
+              {posts && posts.filter((post)=>{
+                return search.toLowerCase()===''?post:(post.title?.toLowerCase().includes(search.toLowerCase())||post.tags?.toLocaleString().toLowerCase().includes(search.toLowerCase()))
+              }).map((post,index) => {
                 if(post.user.avatar)
                   return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />})}
               </>

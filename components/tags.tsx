@@ -49,7 +49,7 @@ const TagsInput: NextPage<Props> = (props: Props) => {
                     </div>)
                 })}
             </>
-            <input type="text" onKeyDown={handleKeyDown} className={`p-[8px] bg-white text-[#000000] font-[QuickSand] flex focus:outline-none ${props.tags.length>5?`hidden`:``} dark:placeholder:text-gray-400 dark:bg-[#10332E] dark:border-[#40675F] dark:text-gray-300`} placeholder="Add tags" />
+            <input type="text" onKeyDown={handleKeyDown} className={`p-[8px] bg-white text-[#000000] font-[QuickSand] focus:outline-none ${props.tags.length<5?``:`hidden`} dark:placeholder:text-gray-400 dark:bg-[#10332E] dark:border-[#40675F] dark:text-gray-300`} placeholder={`${props.tags.length<5?`Add tags`:``}`} />
         </div>
     )
 }
