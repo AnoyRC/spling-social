@@ -121,7 +121,7 @@ const Home = () => {
             <div className='w-1/3'></div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00]  dark:hover:border-[#40675F] border-[1px] dark:border-[#264D49] rounded-full flex bg-[#EAEAEA] dark:bg-[#264D49] self-center h-[65%] w-1/3'>
               <Image src="/SearchBtn.svg" alt="SearchButton" width={20} height={20} className="ml-4"></Image>
-              <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] dark:bg-[#264D49] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none" onChange={(e)=>{setSearch(e.target.value)}}></input>
+              <input type="text" placeholder={isFeatured?`Search for people or tags`:`Search for posts of people you follow`} className="bg-[#EAEAEA] dark:bg-[#264D49] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none" onChange={(e)=>{setSearch(e.target.value)}}></input>
               </div>
               <div className='flex w-1/3 justify-center'>
               <button className='transition ease-in delay-100 bg-[#166F00] dark:bg-[#264D49] rounded-full h-[65%] w-24 self-center flex items-center mx-1 hover:bg-[#5f8e53] dark:hover:bg-[#40675F]' onClick={()=>window.location.href="/create"}>
@@ -226,15 +226,13 @@ const Home = () => {
                 <div className='bg-[#166f00] justify-end flex flex-col w-[85%] h-[4px] self-center rounded-t-md ml-7 dark:bg-[#40675F]'></div>
               </div></>}
               </div>
-              {/* <>
-              {isFeatured && (posts && posts.map((post,index) => {
-                if(post.user.avatar)
-                  return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />}))}
-              </> */}
+              
               {isFeatured && posts?.length === 0 && <h1 className='text-[#5E5E5E] italic text-center mt-6'>{`"Touch Some Grass, after you come back you will see some posts here!!"`}</h1>}
 
               <>
-              {!isFeatured && loadPersonalized && (personalizedPosts && personalizedPosts.map((post,index) => {
+              {!isFeatured && loadPersonalized && (personalizedPosts && personalizedPosts.filter((post)=>{
+                return search.toLowerCase()===""?post:(post.title?.toLowerCase().includes(search.toLowerCase())||post.tags?.toLocaleString().toLowerCase().includes(search.toLowerCase()))
+              }).map((post,index) => {
                 if(post.user.avatar)
                   return <Posts key={index} post={post} socialProtocol={socialProtocol} user = {userInfo} walletAddress = {walletAddress} />}))}
               </>

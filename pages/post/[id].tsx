@@ -77,7 +77,7 @@ export default function Posts() {
     };
 
     const userIntitialize = async () => {
-      if (walletAddress?.wallet?.adapter?.publicKey) {
+      if (walletAddress?.wallet?.adapter?.publicKey && socialProtocol) {
         const user = await socialProtocol?.getUserByPublicKey(
           walletAddress?.wallet?.adapter?.publicKey
         );

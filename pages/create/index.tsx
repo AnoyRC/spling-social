@@ -16,6 +16,7 @@ import { Keypair } from "@solana/web3.js";
 import useAutosizeTextArea from "@/hooks/useAutosizeTextarea";
 import TagsInput from "@/components/tags";
 import ShortPost from "@/components/shortPost";
+import { useTheme } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default function Posts() {
   const [articleImage, setArticleImage] = useState<File>();
   const [tags, setTags] = useState<string[]>([]);
   const [toggle, setToggle] = useState<boolean>(false);
+  const {theme,setTheme}=useTheme()
 
   const articleImgRef = useRef<HTMLInputElement>(null);
 
@@ -48,6 +50,10 @@ export default function Posts() {
 
     setArticle(val);
   };
+  const handleThemeSwitch = () => {
+    
+    setTheme(theme==="dark"?"light":"dark")
+  }
 
   const convertBase64 = (file: File) => {
     return new Promise((resolve, reject) => {
@@ -137,7 +143,7 @@ export default function Posts() {
             <div className='w-1/3'></div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00]  dark:hover:border-[#40675F] border-[1px] dark:border-[#264D49] rounded-full flex bg-[#EAEAEA] dark:bg-[#264D49] self-center h-[65%] w-1/3'>
               <Image src="/SearchBtn.svg" alt="SearchButton" width={20} height={20} className="ml-4"></Image>
-              <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] dark:bg-[#264D49] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none"></input>
+              <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] dark:bg-[#264D49] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none" onClick={()=>{window.location.href="./"}}></input>
               </div>
               <div className='flex w-1/3 justify-center'>
               <button className='transition ease-in delay-100 bg-[#166F00] rounded-full h-[65%] w-24 self-center mx-1 flex items-center justify-center hover:bg-[#5f8e53] dark:bg-[#264D49] dark:hover:bg-[#40675F]' onClick={createPostInitialization}>
@@ -145,7 +151,7 @@ export default function Posts() {
                 <h1 className='text-m ml-1 text-white font-[Quicksand] dark:text-gray-300'>Publish</h1>
               </button>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 dark:bg-[#10332E] dark:hover:border-[#40675F]'>
-                <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
+                <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className="hover:cursor-pointer" onClick={handleThemeSwitch}></Image>
               </div>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] bg-[#FFFFFF] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 mr-[10%] hover:cursor-pointer dark:bg-[#10332E] dark:hover:border-[#40675F]' onClick={()=>{setToggle(!toggle)}}>
                 <Image src="/AccountIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
