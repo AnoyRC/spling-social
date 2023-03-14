@@ -14,6 +14,9 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from 'react';
 import { Keypair } from '@solana/web3.js';
 import { NextPage } from 'next';
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,7 +34,7 @@ const WalletMultiButtonDynamic = dynamic(
 
 
 
-const CreateUser=()=>{
+const CreateUser = () => {
 
 
 
@@ -60,47 +63,49 @@ const CreateUser=()=>{
         });
     };
 
-    const createuser=async()=>{
+    const createuser = async () => {
         if (userName?.length === 0) {
-            
-            return 
-          }
-      
-          if (socialProtocol) {
+            return toast.warn("Enter a username")
+        }
+        if (!avatar) {
+            return toast.warn("Upload a avatar")
+        }
+        if (!bio) {
+            return toast.warn("Enter a bio")
+        }
+        if (socialProtocol) {
             if (avatar) {
-              const profileImage = avatar;
-              let base64Img = await convertBase64(profileImage);
-              const FileDataValue = {
-                base64: base64Img,
-                size: avatar.size,
-                type: avatar.type,
-              };
-      
-              
-                //const promise = async () => {
-                  const user: User = await socialProtocol.createUser(
-                    userName,
-                    FileDataValue as FileData,
-                    bio
-                  );
-                  if(user){
-                    window.location.href = '/'
-                  }
-                  console.log(user);
-                //};
-            //     toast.promise(promise(), {
-            //       pending: "Creating Profile",
-            //       success: "Profile Created",
-            //       error: "Error Creating Profile",
-            //     });
-            //   } else {
-            //     return toast.warn("Please select atleast one category to continue");
-            //   }
+                const profileImage = avatar;
+                let base64Img = await convertBase64(profileImage);
+                const FileDataValue = {
+                    base64: base64Img,
+                    size: avatar.size,
+                    type: avatar.type,
+                };
+
+
+                const promise = async () => {
+                    const user: User = await socialProtocol.createUser(
+                        userName,
+                        FileDataValue as FileData,
+                        bio
+                    );
+                    if (user) {
+                        window.location.href = '/'
+                    }
+                    console.log(user);
+                };
+                toast.promise(promise(), {
+                    pending: "Creating Profile",
+                    success: "Profile Created",
+                    error: "Error Creating Profile",
+                });
+
             } else {
                 console.log("Add avatar")
-                return 
+                return
             }
-          }
+        }
     }
 
     useEffect(() => {
@@ -114,7 +119,7 @@ const CreateUser=()=>{
                     options
                 ).init();
                 setSocialProtocol(socialProtocol);
-                
+
             }
         };
         initialize();
@@ -184,7 +189,16 @@ const CreateUser=()=>{
                 </div>
 
             </div>
-
+            <ToastContainer
+                position="bottom-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                draggable
+                theme='dark'
+            />
         </div>
     )
 }

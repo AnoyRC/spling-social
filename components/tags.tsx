@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { NextPage } from "next";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 interface Props{
     tags:string[];
@@ -9,7 +10,7 @@ interface Props{
 
 const TagsInput: NextPage<Props> = (props: Props) => {
 
-    //const [tags, setTags] = useState<string[]>([])
+    const {theme,setTheme}=useTheme()
     const handleKeyDown=(evt:React.KeyboardEvent<HTMLInputElement>)=>{
         
 
@@ -44,7 +45,7 @@ const TagsInput: NextPage<Props> = (props: Props) => {
                     return(<div className="bg-[#F8FFE9] flex flex-row rounded-full px-1 h-[25px] w-fit my-2 ml-2 border-[#166f00] border-[1px] justify-center items-center dark:bg-[#10332E] dark:border-[#40675F] " key={index}>
                         <h1 className=" text-[#000000] font-[QuickSand] ml-1 text-center pb-0.5 dark:text-gray-300">{tag}</h1>
                         <div className=" flex justify-center items-center ml-1 hover:cursor-pointer " onClick={()=>{removeTag(index)}}>
-                            <Image src="/CloseIcon.svg" alt="CloseButton" width={20} height={20} className=""></Image>
+                            <Image src={theme==='dark'?`/CloseIconDarkMode.svg`:`/CloseIcon.svg`} alt="CloseButton" width={20} height={20} className=""></Image>
                         </div>
                     </div>)
                 })}

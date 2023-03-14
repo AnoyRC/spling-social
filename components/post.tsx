@@ -3,6 +3,7 @@ import { Post, SocialProtocol, Reply, User } from "@spling/social-protocol";
 import { WalletContextState } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useTheme } from "next-themes";
 
 interface Props {
   post: Post | undefined;
@@ -16,6 +17,7 @@ const Posts: NextPage<Props> = (props: Props) => {
   const [tags, setTags] = useState<String[]>([]);
   const [like, setLike] = useState<Boolean>(false);
   const [totalLikes, setTotalLikes] = useState<number>(0);
+  const {theme,setTheme}=useTheme()
 
   useEffect(() => {
     if (props.post?.timestamp) {
@@ -90,11 +92,11 @@ const Posts: NextPage<Props> = (props: Props) => {
         </div>
         <div className="flex justify-end w-[100%] items-center mr-7">
           <div className='bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] rounded-full px-3 h-7 w-12 self-center flex items-center justify-center ml-1 hover:cursor-pointer dark:bg-[#10332E] dark:hover:border-[#40675F]' onClick={likePost}>
-              <Image src={like ? `/LikeActiveIcon.svg` : `/LikeIcon.svg`} alt="SearchButton" width={15} height={15} className=""></Image>
+              <Image src={theme==='dark'?(like ? `/LikeActiveIconDarkMode.svg` : `/LikeIconDarkMode.svg`):(like ? `/LikeActiveIcon.svg` : `/LikeIcon.svg`)} alt="SearchButton" width={15} height={15} className=""></Image>
               <h1 className="text-[#000000] text-lg ml-1 font-[Quicksand] dark:text-gray-300">{totalLikes}</h1>
           </div>
           <div className='bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] rounded-full px-1.5 h-7 w-8 self-center flex items-center justify-center ml-1 hover:cursor-pointer dark:bg-[#10332E] dark:hover:border-[#40675F]' onClick={()=>{window.location.href = `/post/${props.post?.postId}`}}>
-              <Image src="/CommentIcon.svg" alt="SearchButton" width={15} height={15} className=""></Image>
+              <Image src={theme==='dark'?`/CommentIconDarkMode.svg`:`/CommentIcon.svg`} alt="SearchButton" width={15} height={15} className=""></Image>
           </div>
         </div>
       </div>
