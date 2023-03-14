@@ -176,7 +176,9 @@ export default function Posts() {
       <div className='bg-[#F8FFE9]  w-screen h-screen dark:bg-[#10332E]'>
         <div className='bg-[#FFFFFF] dark:bg-[#10332E] border-[#166F00] border-b-[1px] dark:border-[#40675F] w-screen z-10 h-16 fixed'>
           <div className='flex h-full justify-center'>
-            <div className='w-1/3'></div>
+            <div className='w-1/3'>
+            <Image src={posts && theme==='dark'?`/SolSPaceLogoDarkMode.png`:`/SolSpaceLogo.png`} alt="SolSpaceLogo" width={160} height={160} className="ml-4"></Image>
+            </div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00]  dark:hover:border-[#40675F] border-[1px] dark:border-[#264D49] rounded-full flex bg-[#EAEAEA] dark:bg-[#264D49] self-center h-[65%] w-1/3'>
               <Image src="/SearchBtn.svg" alt="SearchButton" width={20} height={20} className="ml-4"></Image>
               <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] dark:bg-[#264D49] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none" onClick={()=>{window.location.href="/"}}></input>

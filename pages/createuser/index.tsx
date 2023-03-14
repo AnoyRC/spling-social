@@ -126,7 +126,7 @@ const CreateUser = () => {
     }, [solanaWallet, walletAddress]);
     return (
 
-        <div className='w-full h-screen  bg-[#F8FFE9] dark:bg-[#10332E] dark:border-[#40675F]'>
+        <div className='w-full h-screen  bg-[#F8FFE9] dark:bg-[#10332E] dark:border-[#40675F]' style={{backgroundImage:`url(${"/BgDarkMode.png"})`,width:'100%',height:'50%'}}>
             <div className=' flex justify-center items-center flex-col h-screen '>
                 <div className='border-[#166F00] border-[1px] rounded-[26px] flex flex-col bg-white p-5 dark:bg-[#10332E] dark:border-[#40675F]'>
                     <div
@@ -178,7 +178,7 @@ const CreateUser = () => {
                         className="bg-[#EAEAEA] w-[430px] h-[203px] rounded-lg text-[#8C8C8C] dark:text-gray-300 font-[Quicksand] mx-2 focus:outline-none mb-6 p-2 border-[1px] border-[#166F00] dark:bg-[#264D49] dark:border-[#264D49] dark:hover:border-[#40675F]"
                     />
 
-                    <button className='bg-[#166F00] w-[40%] self-center font-[QuicksandBold] text-lg text-white p-2 rounded-xl' onClick={createuser}>
+                    <button className='bg-[#166F00] w-[40%] self-center font-[QuicksandBold] text-lg text-white p-2 rounded-xl dark:bg-[#264D49] dark:hover:bg-[#40675F]' onClick={createuser}>
                         Sign Up
                     </button>
 

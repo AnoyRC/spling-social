@@ -29,7 +29,7 @@ const ShortPost: NextPage<Props> = (props: Props) => {
         <div className="flex flex-col ml-3 -mt-1.5">
             {props.post?.title && <h1 className="text-[#000000] text-xl font-[Quicksand] dark:text-gray-300">{props.post?.title.length < 40 ? props.post?.title : props.post?.title.substring(0,40) + "..."}</h1>}
             <h1 className="text-[#5E5E5E] text-sm font-[Quicksand] dark:text-gray-300">{props.post?.user.nickname}</h1>
-            <div className='hover:bg-[#F8FFE9] rounded-full px-3 h-7 w-12 flex items-center justify-center mt-2 dark:hover:bg-[#40675F]'>
+            <div className='hover:bg-[#F8FFE9] rounded-full px-3 h-7 w-12 flex items-center justify-center mt-2 dark:bg-[#1c584f] dark:hover:bg-[#40675F]'>
               <Image src={theme==='dark'?`/LikeIconDarkMode.svg`:`/LikeIcon.svg`} alt="SearchButton" width={15} height={15} className=""></Image>
               <h1 className="text-[#000000] text-lg ml-1 font-[Quicksand] dark:text-gray-300">{props.post?.likes.length}</h1>
             </div>
