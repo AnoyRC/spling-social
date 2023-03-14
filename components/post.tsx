@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
+
 interface Props {
   post: Post | undefined;
   socialProtocol: SocialProtocol | undefined;
