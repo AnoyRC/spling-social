@@ -139,7 +139,9 @@ const Users = () => {
       <div className='bg-[#F8FFE9] w-screen h-screen dark:bg-[#10332E] dark:border-[#40675F]'>
         <div className='bg-[#FFFFFF] border-[#166F00] border-b-[1px] w-screen z-10 h-16 fixed dark:bg-[#10332E] dark:border-[#40675F]'>
           <div className='flex h-full justify-center'>
-            <div className='w-1/3'></div>
+            <div className='w-1/3'>
+            <Image src={posts && theme==='dark'?`/SolSPaceLogoDarkMode.png`:`/SolSpaceLogo.png`} alt="SolSpaceLogo" width={160} height={160} className="ml-4"></Image>
+            </div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00]  dark:hover:border-[#40675F] border-[1px] dark:border-[#264D49] rounded-full flex bg-[#EAEAEA] dark:bg-[#264D49] self-center h-[65%] w-1/3'>
               <Image src="/SearchBtn.svg" alt="SearchButton" width={20} height={20} className="ml-4"></Image>
               <input type="text" placeholder="Search for people or tags" className="bg-[#EAEAEA] dark:bg-[#264D49] w-full h-full rounded-full text-[#8C8C8C] font-[Quicksand] mx-2 focus:outline-none" onChange={(e) => { setSearch(e.target.value) }}></input>
@@ -150,16 +152,16 @@ const Users = () => {
                 <h1 className='text-m ml-1 text-[#ffffff] font-[Quicksand] font-normal dark:text-gray-300 '>Write</h1>
               </button>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] dark:hover:border-[#40675F] hover:border-[1px] bg-[#FFFFFF] dark:bg-[#10332E] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1'>
-                <Image src={theme==='dark'?`/LightModeIcon.svg`:`/DarkModeIcon.svg`} alt="SearchButton" width={25} height={25} className="hover:cursor-pointer" onClick={handleThemeSwitch}></Image>
+                <Image src={posts && theme==='dark'?`/LightModeIcon.svg`:`/DarkModeIcon.svg`} alt="SearchButton" width={25} height={25} className="hover:cursor-pointer" onClick={handleThemeSwitch}></Image>
               </div>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] dark:hover:border-[#40675F] hover:border-[1px] bg-[#FFFFFF] dark:bg-[#10332E] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 mr-[10%] hover:cursor-pointer' onClick={() => { setToggle(!toggle) }}>
-                <Image src={theme==='dark'?`/AccountIconDarkMode.svg`:`/AccountIcon.svg`} alt="SearchButton" width={25} height={25} className=""></Image>
+                <Image src={posts && theme==='dark'?`/AccountIconDarkMode.svg`:`/AccountIcon.svg`} alt="SearchButton" width={25} height={25} className=""></Image>
               </div>
             </div>
           </div>
           {userInfo && toggle && <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-xl h-fit w-[15%] fixed ml-[78%] mt-3 flex flex-col items-center dark:bg-[#10332E] dark:border-[#40675F]'>
             <div className='rounded-t-xl bg-[#EAEAEA] w-[100%] h-[30%] overflow-hidden'>
-              <Image src={theme==='dark'?`/CloseIconDarkMode.svg`:`/CloseIcon.svg`} alt="CloseButton" width={25} height={20} className="mt-2 ml-[89%] transition ease-out hover:rotate-90 absolute z-10 hover:cursor-pointer" onClick={() => { setToggle(false) }}></Image>
+              <Image src={posts && theme==='dark'?`/CloseIconDarkMode.svg`:`/CloseIcon.svg`} alt="CloseButton" width={25} height={20} className="mt-2 ml-[89%] transition ease-out hover:rotate-90 absolute z-10 hover:cursor-pointer" onClick={() => { setToggle(false) }}></Image>
               {userInfo.avatar && <Image
                 src={userInfo?.avatar}
                 alt="avatar"
@@ -205,7 +207,7 @@ const Users = () => {
               >
                 <div className="flex justify-start w-[100%]">
                   <Image
-                    src={theme==='dark'?`/FeedIconDarkMode.svg`:`/FeedIcon.svg`}
+                    src={posts && theme==='dark'?`/FeedIconDarkMode.svg`:`/FeedIcon.svg`}
                     alt="SearchButton"
                     width={30}
                     height={30}
@@ -224,7 +226,7 @@ const Users = () => {
                   }}
                 >
                   <Image
-                    src={theme==='dark'?`/ExploreIconDarkMode.svg`:`/ExploreIcon.svg`}
+                    src={posts && theme==='dark'?`/ExploreIconDarkMode.svg`:`/ExploreIcon.svg`}
                     alt="SearchButton"
                     width={30}
                     height={30}
@@ -244,7 +246,7 @@ const Users = () => {
               >
                 <div className="flex justify-start w-[100%]">
                   <Image
-                    src={theme==='dark'?`/ProfileIconDarkMode.svg`:`/ProfileIcon.svg`}
+                    src={posts && theme==='dark'?`/ProfileIconDarkMode.svg`:`/ProfileIcon.svg`}
                     alt="SearchButton"
                     width={30}
                     height={30}
@@ -262,19 +264,19 @@ const Users = () => {
               <div className='bg-[#FFFFFF] w-[100%] h-[50px] rounded-t-[26px] border-[#166f00] border-b-[1px] flex dark:bg-[#10332E] dark:border-[#40675F]'>
                 {isFeatured && (<><div className='flex flex-col justify-center'>
                   <div className='flex items-center ml-7 h-[100%]'>
-                    <Image src={theme==='dark'?`/FeaturedActiveIconDarkMode.svg`:`/FeaturedActiveIcon.svg`} alt="Featured" width={16} height={16} ></Image>
+                    <Image src={posts && theme==='dark'?`/FeaturedActiveIconDarkMode.svg`:`/FeaturedActiveIcon.svg`} alt="Featured" width={16} height={16} ></Image>
                     <h1 className='text-[#166f00] ml-2 text-lg dark:text-gray-300'>Featured</h1>
                   </div>
                   <div className='bg-[#166f00] justify-end flex flex-col w-[80%] h-[4px] self-center rounded-t-md ml-7 dark:bg-[#10332E] dark:border-[#40675F]'></div>
                 </div>
                   <div className='flex items-center ml-5 pb-1 px-2 hover:bg-[#EAEAEA] dark:hover:bg-[#40675F]' onClick={() => { setIsFeatured(false) }}>
-                    <Image src={theme==='dark'?`/PersonalizedIconDarkMode.svg`:`/PersonalizedIcon.svg`} alt="Personalized" width={13} height={13} ></Image>
+                    <Image src={posts && theme==='dark'?`/PersonalizedIconDarkMode.svg`:`/PersonalizedIcon.svg`} alt="Personalized" width={13} height={13} ></Image>
                     <h1 className='text-[#000000] ml-2 text-lg dark:text-gray-300'>Personalized</h1>
                   </div></>) ||
                   <>
                     <div className='flex flex-col justify-center'>
                       <div className='flex items-center ml-5 h-[100%]'>
-                        <Image src={theme==='dark'?`/PersonalizedActiveIconDarkMode.svg`:`/PersonalizedActiveIcon.svg`} alt="Personalized" width={13} height={13} className='mb-[0.5px]' ></Image>
+                        <Image src={posts && theme==='dark'?`/PersonalizedActiveIconDarkMode.svg`:`/PersonalizedActiveIcon.svg`} alt="Personalized" width={13} height={13} className='mb-[0.5px]' ></Image>
                         <h1 className='text-[#166f00] ml-2 text-lg font-[Quicksand] dark:text-gray-300'>{`${userQuery?.nickname}'s posts`}</h1>
                       </div>
                       <div className='bg-[#166f00] justify-end flex flex-col w-[85%] h-[4px] self-center rounded-t-md ml-7 dark:bg-[#10332E] dark:border-[#40675F]'></div>

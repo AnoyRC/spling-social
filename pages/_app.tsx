@@ -6,6 +6,7 @@ import { clusterApiUrl } from '@solana/web3.js'
 import { useMemo } from 'react'
 import { PhantomWalletAdapter } from '@solana/wallet-adapter-wallets'
 import { ThemeProvider } from 'next-themes'
+import Head from 'next/head'
 
 
 
@@ -24,6 +25,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <WalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>
           <ThemeProvider enableSystem={true} attribute="class">
+            <Head>
+              <link rel="shortcut icon" href="/favicon.ico" />
+              <title>SolSpace</title>
+            </Head>
             <Component {...pageProps} />
           </ThemeProvider>
         </WalletModalProvider>

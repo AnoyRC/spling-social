@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 
+
 interface Props {
   post: Post | undefined;
   socialProtocol: SocialProtocol | undefined;
@@ -91,11 +92,11 @@ const Posts: NextPage<Props> = (props: Props) => {
           )}
         </div>
         <div className="flex justify-end w-[100%] items-center mr-7">
-          <div className='bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] rounded-full px-3 h-7 w-12 self-center flex items-center justify-center ml-1 hover:cursor-pointer dark:bg-[#10332E] dark:hover:border-[#40675F]' onClick={likePost}>
+          <div className='bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] rounded-full px-3 h-7 w-12 self-center flex items-center justify-center ml-1 hover:cursor-pointer dark:bg-[#1c584f] dark:hover:bg-[#40675F] ' onClick={likePost}>
               <Image src={theme==='dark'?(like ? `/LikeActiveIconDarkMode.svg` : `/LikeIconDarkMode.svg`):(like ? `/LikeActiveIcon.svg` : `/LikeIcon.svg`)} alt="SearchButton" width={15} height={15} className=""></Image>
               <h1 className="text-[#000000] text-lg ml-1 font-[Quicksand] dark:text-gray-300">{totalLikes}</h1>
           </div>
-          <div className='bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] rounded-full px-1.5 h-7 w-8 self-center flex items-center justify-center ml-1 hover:cursor-pointer dark:bg-[#10332E] dark:hover:border-[#40675F]' onClick={()=>{window.location.href = `/post/${props.post?.postId}`}}>
+          <div className='bg-[#F8FFE9] hover:border-[#166F00] hover:border-[1px] rounded-full px-1.5 h-7 w-8 self-center flex items-center justify-center ml-1 hover:cursor-pointer dark:bg-[#1c584f] dark:hover:bg-[#40675F]' onClick={()=>{window.location.href = `/post/${props.post?.postId}`}}>
               <Image src={theme==='dark'?`/CommentIconDarkMode.svg`:`/CommentIcon.svg`} alt="SearchButton" width={15} height={15} className=""></Image>
           </div>
         </div>
