@@ -4,7 +4,8 @@ import { WalletContextState } from "@solana/wallet-adapter-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTheme } from "next-themes";
-
+import { ToastContainer,toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Props {
   post: Post | undefined;
@@ -41,12 +42,19 @@ const Posts: NextPage<Props> = (props: Props) => {
   }, [props.post?.timestamp, props.post?.likes]);
 
   const likePost = async () => {
-    if(props?.post){
-      await props.socialProtocol?.likePost(props.post?.publicKey);
+    const promise=async()=>{
+      if(props?.post){
+        await props.socialProtocol?.likePost(props.post?.publicKey);
+      }
+      if(like) setTotalLikes(totalLikes-1);
+      else setTotalLikes(totalLikes+1);
+      setLike(!like);
     }
-    if(like) setTotalLikes(totalLikes-1);
-    else setTotalLikes(totalLikes+1);
-    setLike(!like);
+    toast.promise(promise(),{
+      pending:"Liking",
+      success:"Liked",
+      error:"Login with wallet"
+    })
   }
 
   return (
@@ -101,6 +109,16 @@ const Posts: NextPage<Props> = (props: Props) => {
           </div>
         </div>
       </div>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        draggable
+        theme='dark'
+      />
     </div>
   );
 };
