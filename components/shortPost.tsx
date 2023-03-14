@@ -12,7 +12,7 @@ interface Props {
   user: User | null | undefined;
 }
 
-const shortPost: NextPage<Props> = (props: Props) => {
+const ShortPost: NextPage<Props> = (props: Props) => {
   const{theme,setTheme}=useTheme()
     return(
     <div className="w-[100%] h-fit border-[#166f00] border-b-[1px] hover:bg-[#f2f2f2] hover:cursor-pointer transition ease-out dark:border-[#40675F] dark:hover:bg-[#264D49]" onClick={()=>{window.location.href = `/post/${props.post?.postId}`}}>
@@ -38,4 +38,4 @@ const shortPost: NextPage<Props> = (props: Props) => {
     </div>)
 }
 
-export default shortPost;
+export default ShortPost;
