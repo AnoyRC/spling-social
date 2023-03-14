@@ -12,7 +12,7 @@ This project is made with a purpose of bringing in the solana's dev community in
 - Light/dark mode toggle
 - Supports Solana and SHDW token for transaction
 - Optimized to the finest
-- Cross platform (Android App)
+- Cross platform (Android App) [Link](https://github.com/AnoyRC/SplingSocialMobile)
 
 
 ## Website Live At 
