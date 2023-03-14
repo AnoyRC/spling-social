@@ -104,7 +104,7 @@ const Trending = () => {
       <div className='bg-[#F8FFE9] w-screen h-screen dark:bg-[#10332E] dark:border-[#40675F]'>
       <div className='bg-[#FFFFFF] border-[#166F00] border-b-[1px] w-screen z-10 h-16 fixed dark:bg-[#10332E] dark:border-[#40675F]'>
           <div className='flex h-full justify-center'>
-            <div className='w-1/3'>
+            <div className='w-1/3 flex justify-end pr-[10%] items-center'>
             <Image src={posts && theme==='dark'?`/SolSPaceLogoDarkMode.png`:`/SolSpaceLogo.png`} alt="SolSpaceLogo" width={160} height={160} className="ml-4"></Image>
             </div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00]  dark:hover:border-[#40675F] border-[1px] dark:border-[#264D49] rounded-full flex bg-[#EAEAEA] dark:bg-[#264D49] self-center h-[65%] w-1/3'>
