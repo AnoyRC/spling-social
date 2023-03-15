@@ -78,11 +78,7 @@ const Users = () => {
             if (user !== null) setStatus(true)
           }
         }
-        toast.promise(promise(),{
-          pending: "Initializing",
-          success: "Success",
-          error: "Error Initializing",
-        })
+        promise();
       }
 
       if (router.query.id === undefined) return;
@@ -92,7 +88,7 @@ const Users = () => {
     };
 
     const postInitialize = async () => {
-      if (socialProtocol !== null && socialProtocol !== undefined) {
+      if (socialProtocol !== null && socialProtocol !== undefined && !posts) {
         const posts = await socialProtocol.getAllPosts(33);
         const filteredPosts = posts.filter((post) => post.userId == Number(router.query.id) && post.groupId == 33);
         setPosts(filteredPosts);
@@ -102,7 +98,15 @@ const Users = () => {
 
     Initialize();
     userIntitialize();
-    postInitialize();
+    toast.promise(postInitialize(), {
+      pending: "Loading...",
+      success: "Success",
+      error: "Error",
+    },{
+      delay: 500
+      }).then(() => {
+    toast.dismiss();})
+    toast.clearWaitingQueue();
   }, [solanaWallet, walletAddress]);
 
   useEffect(() => {
@@ -317,7 +321,7 @@ const Users = () => {
                   <div className='flex justify-center mx-10 w-[70%] mb-5 font-[Quicksand]'>
                     <div className='flex flex-col justify-center items-center'>
                       <h1 className='text-[#000000] text-lg mt-4 = font-[Quicksand] dark:text-gray-300'>Following</h1>
-                      <h1 className='text-[#000000] text-lg font-[Quicksand] dark:text-gray-300'>{userQuery?.following.length}</h1>
+                      <h1 className='text-[#000000] text-lg font-[QuicksandBold] dark:text-gray-300'>{userQuery?.following.length}</h1>
                     </div>
                   </div>
                 </div>
@@ -330,6 +334,7 @@ const Users = () => {
         </div>
       </div>
       <ToastContainer
+      limit={1}
         position="bottom-left"
         autoClose={5000}
         hideProgressBar={false}

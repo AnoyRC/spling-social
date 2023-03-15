@@ -16,6 +16,7 @@ import { Keypair } from '@solana/web3.js';
 import { NextPage } from 'next';
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import { useTheme } from 'next-themes';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -45,7 +46,7 @@ const CreateUser = () => {
     const [userName, setUserName] = useState<string>("")
     const [bio, setBio] = useState<string>("")
     const avatarRef = useRef<HTMLInputElement>(null)
-
+    const{theme,setTheme}=useTheme()
     const solanaWallet = useWallet();
 
     const convertBase64 = (file: File) => {
@@ -126,7 +127,7 @@ const CreateUser = () => {
     }, [solanaWallet, walletAddress]);
     return (
 
-        <div className='w-full h-screen  bg-[#F8FFE9] dark:bg-[#10332E] dark:border-[#40675F]' style={{backgroundImage:`url(${"/BgDarkMode.png"})`,width:'100%',height:'50%'}}>
+        <div className='w-full h-screen  bg-[#F8FFE9] dark:bg-[#10332E] dark:border-[#40675F]' style={{backgroundImage:`url(${walletAddress && theme === 'dark' ?"/BgDarkMode.png": "/Bg.png"})`,width:'100%',height:'50%'}}>
             <div className=' flex justify-center items-center flex-col h-screen '>
                 <div className='border-[#166F00] border-[1px] rounded-[26px] flex flex-col bg-white p-5 dark:bg-[#10332E] dark:border-[#40675F]'>
                     <div
@@ -147,7 +148,7 @@ const CreateUser = () => {
                         ) : (
                             <div className="flex flex-row">
                                 <img
-                                    src="/UploadProfileIcon.svg"
+                                    src={walletAddress && theme === 'dark' ?"/UploadProfileIconDarkMode.svg": "/UploadProfileIcon.svg"}
                                     alt="ProfilePic"
                                     className="h-[120px] w-[120px] "
                                 />

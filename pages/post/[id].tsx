@@ -20,6 +20,8 @@ import TagsInput from "@/components/tags";
 import ShortPost from "@/components/shortPost";
 import ReplyBody from "@/components/reply";
 import { useTheme } from "next-themes";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -137,7 +139,11 @@ export default function Posts() {
 
     Initialize();
     userIntitialize();
-    postInitialize();
+    toast.promise(postInitialize(), {
+      pending: "Loading Post",
+      success: "Post Loaded",
+      error: "Error Loading Post",
+    }).then(()=>{toast.dismiss()})
     commentInitialize();
   }, [solanaWallet]);
 
@@ -151,15 +157,23 @@ export default function Posts() {
 
   const likePost = async () => {
     if(post){
-      await socialProtocol?.likePost(post?.publicKey);
+      const promise = async() =>{
+        await socialProtocol?.likePost(post?.publicKey);
+        if(like) setTotalLikes(totalLikes-1);
+        else setTotalLikes(totalLikes+1);
+        setLike(!like);
+      }
+      toast.promise(promise(), {
+        pending: "Liking Post",
+        success: "Post Liked",
+        error: "Error Liking Post",
+      });
     }
-    if(like) setTotalLikes(totalLikes-1);
-    else setTotalLikes(totalLikes+1);
-    setLike(!like);
   }
 
   const handleReplies = async() => {
     if(comment && comment?.length > 0){
+      const promise = async() => {
       const newReply = await socialProtocol?.createPostReply(Number(router.query.id),comment)
 
       if(replies && newReply){
@@ -169,6 +183,13 @@ export default function Posts() {
 
       setComment("")
     }
+
+    toast.promise(promise(), {
+      pending: "Creating Reply",
+      success: "Reply Created",
+      error: "Error Creating Reply",
+    });
+    }
   }
 
   return (
@@ -177,7 +198,7 @@ export default function Posts() {
         <div className='bg-[#FFFFFF] dark:bg-[#10332E] border-[#166F00] border-b-[1px] dark:border-[#40675F] w-screen z-10 h-16 fixed'>
           <div className='flex h-full justify-center'>
             <div className='w-1/3 flex justify-end pr-[10%] items-center'>
-            <Image src={posts && theme==='dark'?`/SolSPaceLogoDarkMode.png`:`/SolSpaceLogo.png`} alt="SolSpaceLogo" width={160} height={160} className="ml-4"></Image>
+            <Image src={socialProtocol && theme==='dark'?`/SolSPaceLogoDarkMode.png`:`/SolSpaceLogo.png`} alt="SolSpaceLogo" width={160} height={160} className="ml-4"></Image>
             </div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00]  dark:hover:border-[#40675F] border-[1px] dark:border-[#264D49] rounded-full flex bg-[#EAEAEA] dark:bg-[#264D49] self-center h-[65%] w-1/3'>
               <Image src="/SearchBtn.svg" alt="SearchButton" width={20} height={20} className="ml-4"></Image>
@@ -189,10 +210,10 @@ export default function Posts() {
                 <h1 className='text-m ml-1 text-[#ffffff] font-[Quicksand] font-normal dark:text-gray-300 '>Write</h1>
               </button>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] dark:hover:border-[#40675F] hover:border-[1px] bg-[#FFFFFF] dark:bg-[#10332E] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1'>
-                <Image src="/DarkModeIcon.svg" alt="SearchButton" width={25} height={25} className="hover:cursor-pointer" onClick={handleThemeSwitch}></Image>
+                <Image src={socialProtocol && theme==='dark'?`/LightModeIcon.svg`:`/DarkModeIcon.svg`} alt="SearchButton" width={25} height={25} className="hover:cursor-pointer" onClick={handleThemeSwitch}></Image>
               </div>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] dark:hover:border-[#40675F] hover:border-[1px] bg-[#FFFFFF] dark:bg-[#10332E] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 mr-[10%] hover:cursor-pointer' onClick={()=>{setToggle(!toggle)}}>
-                <Image src="/AccountIcon.svg" alt="SearchButton" width={25} height={25} className=""></Image>
+                <Image src={socialProtocol && theme==='dark'?`/AccountIconDarkMode.svg`:`/AccountIcon.svg`} alt="SearchButton" width={25} height={25} className=""></Image>
               </div>
               </div>
             </div>
@@ -244,7 +265,7 @@ export default function Posts() {
               >
                 <div className="flex justify-start w-[100%]">
                   <Image
-                    src="/FeedIcon.svg"
+                    src={socialProtocol && theme==='dark'?`/FeedIconDarkMode.svg`:`/FeedIcon.svg`}
                     alt="SearchButton"
                     width={30}
                     height={30}
@@ -263,7 +284,7 @@ export default function Posts() {
                   }}
                 >
                   <Image
-                    src="/ExploreIcon.svg"
+                    src={socialProtocol && theme==='dark'?`/ExploreIconDarkMode.svg`:`/ExploreActiveIcon.svg`}
                     alt="SearchButton"
                     width={30}
                     height={30}
@@ -283,7 +304,7 @@ export default function Posts() {
               >
                 <div className="flex justify-start w-[100%]">
                   <Image
-                    src="/ProfileIcon.svg"
+                    src={socialProtocol && theme==='dark'?`/ProfileIconDarkMode.svg`:`/ProfileIcon.svg`}
                     alt="SearchButton"
                     width={30}
                     height={30}
@@ -440,6 +461,17 @@ export default function Posts() {
             </div>
           </div>
         </div>
+        <ToastContainer
+      limit={1}
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        draggable
+        theme='dark'
+      />
       </div>
     </>
   );

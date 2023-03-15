@@ -74,16 +74,16 @@ export default function ConnectPage() {
     }, [solanaWallet]);
     return (
 
-        <div className='w-full h-screen  bg-[#F8FFE9] dark:bg-[#10332E]' style={{backgroundImage:`url(${"/BgDarkMode.png"})`,width:'100%',height:'50%'}} >
+        <div className='w-full h-screen  bg-[#F8FFE9] dark:bg-[#10332E]' style={{backgroundImage:`url(${walletAddress && theme === 'dark' ? "/BgDarkMode.png": "/Bg.png"})`,width:'100%',height:'50%'}} >
             <div className="absolute ">
                 {/* <Image src='/BgDarkMode.png' alt='Bg' width={4000} height={2250} quality={100} className="h-screen w-screen"/> */}
             </div>
             <div className=' flex justify-center items-center flex-col h-screen '>
-                <div className='border-[#166F00] border-[1px] rounded-[26px] flex p-16 flex-col bg-white dark:bg-[#10332E] dark:border-[#40675F]'>
-                    <Image src="/favicon.png" alt='AccountIcon' width={240} height={240} className="self-center mb-4" />
+                <div className='border-[#166F00] border-[1px] rounded-[26px] flex p-16 flex-col bg-[#F8FFE9] dark:bg-[#10332E] dark:border-[#40675F]'>
+                    <Image src={walletAddress && theme === 'dark' ? "/favicon.png": "/faviconDarkMode.png"} alt='AccountIcon' width={240} height={240} className="self-center mb-4" />
                     <div className='items-center flex justify-center pt-3'><WalletMultiButtonDynamic /></div>
 
-                    <p className="text-center font-[Quicksand] text-[#000000] dark:text-gray-300">
+                    <p className="text-center font-[Quicksand] text-[#000000] mt-2 dark:text-gray-300">
                         Step into the community of solana devs
                     </p>
                 </div>

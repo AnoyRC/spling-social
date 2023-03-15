@@ -16,6 +16,8 @@ import { Keypair } from '@solana/web3.js';
 import Posts from '@/components/post';
 import ShortPost from '@/components/shortPost';
 import { useTheme } from 'next-themes';
+import {toast, ToastContainer} from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -74,13 +76,20 @@ const Trending = () => {
 
     const postInitialize = async () => {
       if(socialProtocol !== null && socialProtocol !== undefined){
-        const posts = await socialProtocol.getAllPosts(33);
-        const trendingPosts = posts.sort((a, b) => b.likes.length - a.likes.length);
-        setPosts(trendingPosts);
-        console.log(trendingPosts);
-        const trendingPostsShort = posts.sort((a, b) => b.likes.length - a.likes.length).slice(0, 3);
-        setTrendingPosts(trendingPostsShort)
+        let posts: Post[] | undefined;
+        toast.promise(async()=>{posts = await socialProtocol.getAllPosts(33)
+          const trendingPosts = posts?.sort((a, b) => b.likes.length - a.likes.length);
+          setPosts(trendingPosts);
+          console.log(trendingPosts);
+          const trendingPostsShort = posts?.sort((a, b) => b.likes.length - a.likes.length).slice(0, 3);
+          setTrendingPosts(trendingPostsShort)
+        },{
+          pending: "Loading...",
+          success: "Posts loaded",
+          error: "Error loading posts",
+        })
       }
+      else return;
     };
 
     Initialize();
@@ -105,7 +114,7 @@ const Trending = () => {
       <div className='bg-[#FFFFFF] border-[#166F00] border-b-[1px] w-screen z-10 h-16 fixed dark:bg-[#10332E] dark:border-[#40675F]'>
           <div className='flex h-full justify-center'>
             <div className='w-1/3 flex justify-end pr-[10%] items-center'>
-            <Image src={posts && theme==='dark'?`/SolSPaceLogoDarkMode.png`:`/SolSpaceLogo.png`} alt="SolSpaceLogo" width={160} height={160} className="ml-4"></Image>
+            <Image src={socialProtocol && theme==='dark'?`/SolSPaceLogoDarkMode.png`:`/SolSpaceLogo.png`} alt="SolSpaceLogo" width={160} height={160} className="ml-4"></Image>
             </div>
             <div className='hover:border-[#166F00] focus-within:border-[#166F00]  dark:hover:border-[#40675F] border-[1px] dark:border-[#264D49] rounded-full flex bg-[#EAEAEA] dark:bg-[#264D49] self-center h-[65%] w-1/3'>
               <Image src="/SearchBtn.svg" alt="SearchButton" width={20} height={20} className="ml-4"></Image>
@@ -117,16 +126,16 @@ const Trending = () => {
                 <h1 className='text-m ml-1 text-[#ffffff] font-[Quicksand] font-normal dark:text-gray-300 '>Write</h1>
               </button>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] dark:hover:border-[#40675F] hover:border-[1px] bg-[#FFFFFF] dark:bg-[#10332E] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1'>
-                <Image src={posts && theme==='dark'?`/LightModeIcon.svg`:`/DarkModeIcon.svg`} alt="SearchButton" width={25} height={25} className="hover:cursor-pointer" onClick={handleThemeSwitch}></Image>
+                <Image src={socialProtocol && theme==='dark'?`/LightModeIcon.svg`:`/DarkModeIcon.svg`} alt="SearchButton" width={25} height={25} className="hover:cursor-pointer" onClick={handleThemeSwitch}></Image>
               </div>
               <div className='hover:bg-[#F8FFE9] hover:border-[#166F00] dark:hover:border-[#40675F] hover:border-[1px] bg-[#FFFFFF] dark:bg-[#10332E] rounded-full h-[65%] w-10 self-center flex items-center justify-center ml-1 mr-[10%] hover:cursor-pointer' onClick={()=>{setToggle(!toggle)}}>
-                <Image src={posts && theme==='dark'?`/AccountIconDarkMode.svg`:`/AccountIcon.svg`} alt="SearchButton" width={25} height={25} className=""></Image>
+                <Image src={socialProtocol && theme==='dark'?`/AccountIconDarkMode.svg`:`/AccountIcon.svg`} alt="SearchButton" width={25} height={25} className=""></Image>
               </div>
               </div>
             </div>
             {userInfo && toggle && <div className='bg-[#FFFFFF] border-[#166f00] border-[1px] rounded-xl h-fit w-[15%] fixed ml-[78%] mt-3 flex flex-col items-center dark:bg-[#10332E] dark:border-[#40675F]'>
               <div className='rounded-t-xl bg-[#EAEAEA] w-[100%] h-[30%] overflow-hidden'>
-              <Image src={posts && theme==='dark'?`/CloseIconDarkMode.svg`:`/CloseIcon.svg`} alt="CloseButton" width={25} height={20} className="mt-2 ml-[89%] transition ease-out hover:rotate-90 absolute z-10 hover:cursor-pointer" onClick={()=>{setToggle(false)}}></Image>
+              <Image src={socialProtocol && theme==='dark'?`/CloseIconDarkMode.svg`:`/CloseIcon.svg`} alt="CloseButton" width={25} height={20} className="mt-2 ml-[89%] transition ease-out hover:rotate-90 absolute z-10 hover:cursor-pointer" onClick={()=>{setToggle(false)}}></Image>
               {userInfo.avatar && <Image
                 src={userInfo?.avatar}
                 alt="avatar"
@@ -172,7 +181,7 @@ const Trending = () => {
               >
                 <div className="flex justify-start w-[100%]">
                   <Image
-                    src={posts && theme==='dark'?`/FeedIconDarkMode.svg`:`/FeedIcon.svg`}
+                    src={socialProtocol && theme==='dark'?`/FeedIconDarkMode.svg`:`/FeedIcon.svg`}
                     alt="SearchButton"
                     width={30}
                     height={30}
@@ -191,7 +200,7 @@ const Trending = () => {
                   }}
                 >
                   <Image
-                    src={posts && theme==='dark'?`/ExploreIconDarkMode.svg`:`/ExploreIcon.svg`}
+                    src={socialProtocol && theme==='dark'?`/ExploreIconDarkMode.svg`:`/ExploreIcon.svg`}
                     alt="SearchButton"
                     width={30}
                     height={30}
@@ -211,7 +220,7 @@ const Trending = () => {
               >
                 <div className="flex justify-start w-[100%]">
                   <Image
-                    src={posts && theme==='dark'?`/ProfileIconDarkMode.svg`:`/ProfileIcon.svg`}
+                    src={socialProtocol && theme==='dark'?`/ProfileIconDarkMode.svg`:`/ProfileIcon.svg`}
                     alt="SearchButton"
                     width={30}
                     height={30}
@@ -256,6 +265,17 @@ const Trending = () => {
             </div>
           </div>
         </div>
+        <ToastContainer
+      limit={1}
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        draggable
+        theme='dark'
+      />
       </div>
     </>
   )
